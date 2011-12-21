@@ -1,0 +1,303 @@
+.sem_anzeige {
+    border-top: 0px solid #D9D9D9;
+    border-left: 1px solid #D9D9D9;
+    border-right: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.sem_tab1 {
+    border-top: 1px solid #D9D9D9;
+    border-left: 1px solid #D9D9D9;
+    border-right: 1px solid #D9D9D9;
+    border-bottom: 0px solid #D9D9D9;
+    padding: 5px;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.sem_tab0 {
+    border-top: 0px solid #FFFFFF;
+    border-left: 0px solid #FFFFFF;
+    border-right: 0px solid #FFFFFF;
+    border-bottom: 1px solid #D9D9D9;
+    padding: 5px;
+    text-align: left;
+    white-space: nowrap;
+    background-image: url(../images/0000.png);
+}
+
+.sem_notab {
+    border-top: 0px solid #D9D9D9;
+    border-left: 0px solid #D9D9D9;
+    border-right: 0px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+    padding: 5px;
+    text-align: right;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.sem_notableft {
+    border-top: 0px solid #D9D9D9;
+    border-left: 0px solid #D9D9D9;
+    border-right: 0px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+    padding: 5px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.sem_cat_title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #FF9900;
+    text-align:left;
+    line-height: 20px;
+    width: 100%;
+    height: 18px;
+    padding: 5px;
+    border-bottom: 1px dotted #F3BD15;
+}
+
+.sem_cat_desc {
+    font-size: 12px;
+    text-align:left;
+    padding: 5px;
+    border-bottom: 1px dotted #F3BD15;
+}
+
+.sem_nav {
+    font-size: 12px;
+    font-weight: bolder;
+    padding: 5px;
+    white-space: nowrap;
+    border-bottom: 1px dotted #F3BD15;
+}
+
+.sem_nav_d {
+    font-size: 12px;
+    padding: 5px;
+}
+
+.sem_row {
+    padding: 5px;
+    border-bottom: 1px dotted #F3BD15;
+}
+
+.sem_rowd {
+    padding: 5px;
+    border-bottom: 1px dotted #F3BD15;
+    vertical-align: top;
+}
+
+.sem_reqfield {
+    color: #FF0000;
+}
+
+.sem_inputbox {
+    border: 1px solid #A8A8A8;
+}
+
+.sem_alertbox {
+    border: 1px solid #FF0000;
+    background-color: #FFDDDD;
+}
+
+.sem_title {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sem_fees {
+    float: right;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 2px;
+}
+
+.sem_fees_paid {
+    float: right;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    color: #008000;
+    padding: 2px;
+}
+
+.sem_fees_notpaid {
+    float: right;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    color: #800000;
+    padding: 2px;
+}
+
+.sem_bar {
+    font-size: 8px;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.sem_date {
+    font-size: 12px;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.sem_cancelled {
+    font-size: 12px;
+    font-weight: bolder;
+    color: #FF0000;
+    text-decoration: none;
+}
+
+.sem_shortdesc {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.sem_cat {
+    font-size: 10px;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.sem_list {
+    border-top: 1px solid #B9B9B9;
+    border-left: 1px solid #B9B9B9;
+    border-right: 1px solid #B9B9B9;
+    border-bottom: 0px solid #B9B9B9;
+    width: 100%;
+}
+
+.sem_list_title {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    text-align: center;
+    color: #000000;
+}
+
+.sem_list_date {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.sem_list_head {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000000;
+    background-color: #E0E0E0;
+    border-bottom: 1px solid #B9B9B9;
+    padding: 4px;
+}
+
+.sem_list_row {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    border-bottom: 1px solid #B9B9B9;
+    padding: 4px;
+    vertical-align: top;
+}
+
+.sem_list_blank {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: #404040;
+    background-color: #FFFFFF;
+    padding: 2px;
+}
+
+.sem_tab:link {
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.sem_tab:visited {
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sem_tab:hover {
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sem_title:link {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sem_title:visited {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sem_title:hover {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sem_footer {
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.sem_edit {
+    font-size: 12px;
+    font-style: normal;
+    text-decoration: none;
+    padding: 5px;
+    vertical-align: top;
+}
+
+.pane-sliders .title {
+	margin: 0;
+	padding: 2px;
+	cursor: pointer;
+}
+
+
+.pane-sliders .panel {
+  border: 1px solid #ccc;
+  margin-bottom: 3px;
+}
+
+.pane-sliders .panel h3 {
+    font-size: 12px;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.pane-sliders .content {
+}
+
+.jpane-toggler span {
+  background: transparent url(../images/0002.png) 5px 50% no-repeat;
+  padding-left: 20px;
+}
+
+.jpane-toggler-down span {
+  background: transparent url(../images/0003.png) 5px 50% no-repeat;
+  padding-left: 20px;
+}
+
+.jpane-toggler-down {
+  border-bottom: 1px solid #ccc;
+}
+

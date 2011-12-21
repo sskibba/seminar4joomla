@@ -1,0 +1,252 @@
+Seminar für Joomla! ist ein leistungsfähiges Buchungssystem für Veranstaltungen aller Art. Egal, ob Sie Fortbildungen anbieten, Ihr Verein Ausflüge veranstaltet oder Sie zu einer Party einladen möchten: Mit Seminar für joomla! ist die Verwaltung der Veranstaltungen kein Problem.
+
+In das Buchungssystem wurde auch ein Bewertungs- und ein Zertifikationssystem integriert, die bei Bedarf über Parameter an- und abgestellt werden können. Auch das automatische Verschicken von Benachrichtigungs-E-Mails ist möglich.
+
+Benutzer mit dem Status "Author" oder höher dürfen, falls erwünscht, im Frontend eigene Veranstaltungen einstellen und diese überwachen. Das ist besonders praktisch, wenn der Administrator nicht die ganze Arbeit alleine machen möchte.
+
+Ein Statistikbereich im Backend mit Diagrammen (Google-API) rundet das Buchungssystem ab.
+
+Es sind zwei Sprachpakete enthalten: Deutsch (de-DE) und Englisch (en-GB).
+
+Weitere Sprachpakete sind auf der Seminar-Homepage zu erhalten.
+
+
+
+Neu in Version 1.3.0
+
+
+Die grundlegenden Datumsformate werden durch die Sprachdateien festgelegt. Darüberhinaus können Sie aber durch Angaben in den Einstellungen überschrieben werden.
+
+Joomfish wird direkt unterstützt.
+
+In der Beschreibung können nun Tags steuern, wer bestimmte Textteile angezeigt bekommt. So wird bei der Angabe von [sem_registered] TEXT [/sem_registered] TEXT nur den registrierten Benutzern angezeigt.
+
+Die Eingabelder können vorbelegt werden. Dazu musste aber das Steuerformat geändert werden. Es hat nun das Format Bezeichner|Pflichtfeld|Vorgabewert|Feldtyp|Parameter|Parameter|... Alte Veranstaltungen müssen leider angepasst werden.
+
+In den Einstellungen kann festgelegt werden, ab wann die aktuellen Kurse nicht mehr angezeigt werden sollen (Beginn, Ende oder Anmeldeschluss der Veranstaltung). Diese Einstellung wird auch im Modul berücksichtigt.
+
+Die Sommerzeit wird automatisch berücksichtigt (optional). Damit muss die Zeitzone während der Sommerzeit nicht extra auf +2 gestellt werden. Auch das Modul greift auf diese Einstellung zurück.
+
+Die im Textfeld "Beschreibung" verwendeten Markierungen für die Plugins vom Typ "Inhalt" werden in HTML-Code umgesetzt.
+
+Die Begrenzung der Zusatzfelder auf 120 Zeichen wurde aufgehoben.
+
+Das Zahlenformat für die Währung kann festgelegt werden (Dezimalstellen, Tausender-Trennzeichen, Dezimal-Trennzeichen).
+
+Bei kostenpflichtigen Veranstaltungen wird der Preis stärker hervorgehoben dargestellt als bisher.
+
+Wird die Infozeile in der Übersicht ausgeblendet, so werden auch die freien Plätze in der Detailansicht nicht mehr angezeigt.
+
+Beim nachträglichen Ändern einer Veranstaltung wurden die Zugriffe auf 0 zurückgesetzt. Der Fehler ist behoben.
+
+Veranstaltungsbuchungen können von den Benutzern nur so lange geändert werden, bis die Buchung als bezahlt markiert wurde. danach sind Änderungen nur noch durch den Veranstalter möglich.
+
+Werden bei einer Veranstaltung die maximal buchbaren Plätze auf 0 gesetzt, ist diese nicht mehr online buchbar und dient als Veranstaltungsankündigung.
+
+Die Einstellungen im Backend sind nun direkt aufrufbar und nicht mehr über ein Fenster.
+
+Für die Teilnehmerübersichten der Benutzer kann zwischen Realnamen und Benutzernamen gewählt werden.
+
+Der Eingabebereich der Veranstaltungen wurde aufgeteilt (Grundangaben, Zusatzangaben, Eingabefelder, Dateien), um die inzwischen sehr umfangreichen Eingabemöglichkeiten strukturierter darzustellen.
+
+An jede Veranstaltung können bis zu 5 Dateien angehängt werden. Dabei ist einzeln einstellbar, wer diese Dateien herunterladen darf (jeder, registrierte Benutzer, Benutzer die die Veranstaltung gebucht haben, Benutzer die die Veranstaltung bezahlt haben). Über die Parameter kann die max. Größe und die erlaubten Dateitypen festgelegt werden.
+
+Die Veranstaltungsleitung kann nun auch HTML-Code enthalten, um z.B. einen Link auf ein Benutzerprofil zu ermöglichen.
+
+Für jeden Bereich (Veranstaltungen, Meine Buchungen, Meine Angebote) können in den Einstellungen die Module der oberen Auswahlzeile (Anzahl, Suche, Kategorien, ...) festgelegt werden. Auch das Ausblenden der Auswahlzeile ist möglich.
+
+In der Detailansicht kann eine Kalender-Datei im ICAL-Format heruntergeladen werden. Damit kann der Benutzer die Veranstaltungen in seinen Kalender (z.B. Outlook) eintragen lassen (Einstellung in den Parametern).
+
+Das Anmelden und Abmelden an die joomla!-Webseite kann nun direkt in Seminar erfolgen (Einstellung in den Parametern).
+
+Es ist möglich, Vorlagen für Veranstaltungen anzulegen und zu verwalten.
+
+In den Einstellungen kann festgelegt werden, ab welchem Level ein Benutzer im Frontend Veranstaltungen eingeben darf.
+
+Der CSV-Download klappte nicht richtig, wenn im Datensatz eine Eurozeichen (€) angezeigt wurde. Das lag an der Umsetzung von UTF-8 in ISO-8559-1. Daher wird nun als Standard-Codierung für die CSV-Datei ISO-8559-15 verwendet, falls in den Einstellungen keine andere Kodierung angegeben wurde.
+
+Beim ersten Aufruf des Ausdrucks der Veranstaltungsübersicht wurden immer fünf statt der in den Einstellungen vorgegebenen Anzahl der Veranstaltungen ausgedruckt.
+
+Beim Zurücksetzen der Übersicht wurde die Anzahl der angezeigten Veranstaltungen immer auf fünf gesetzt. Nun wird die in den Einstellungen angegebene Anzahl verwendet.
+
+Beim Beginn, beim Ende und beim Anmeldeschluss einer Veranstaltung kann angegeben werden, ob die eingegebene Zeit angezeigt werden soll. So lassen sich Missverständnisse z.B. bei Veranstaltungen mit offenem Ende vermeiden.
+
+In der Benachrichtigungs-E-Mails wird die Buchungs-ID angezeigt.
+
+Die Anzahl der der eingebbaren Zeichen des Veranstaltungstitels wurde auf 255 erhöht.
+
+Bei jedem Eingabefeld kann angegeben werden, ob es in den Teilnehmerübersichten angezeigt werden soll.
+
+Einige zwingende Angaben wurden zu optionalen Angaben geändert (Leitung, Zielgruppe).
+
+Für jedes Eingabefeld kann ein Erläuterungstext angegeben werden.
+
+Die Zahl der optionalen Eingabefelder wurde auf 20 erhöht.
+
+Die Veranstaltungen können auch in einem RSS-Feed veröffentlicht werden.
+
+Die Veranstaltungsnummer kann frei vergegeben werden.
+
+Auf der Veranstaltungsübersicht werden alle Veranstaltungen angezeigt, die noch nicht beendet wurden, falls der Anmeldeschluss nach dem Veranstaltungsbeginn liegt. Dadurch ist es möglich, auch noch Plätze bei bereits laufenden Veranstaltungen zu buchen.
+
+Das Grundlayout wurde überarbeitet. Es werden die grundlegenden Elemente des Templates übernommen (Schriftart, Verweisfarben, etc.). Natürlich ist es nach wie vor über die CSS-Datei auf eigene Bedürfnisse anpassbar.
+
+Für Webseiten mit dunklem Template wurde ein dunkles Layout ergänzt, das in den Backendparametern statt des hellen Layouts gewählt werden kann.
+
+
+
+Neu in Version 1.29
+
+Verhinderung einer "Blind SQL Injection" durch bösartige Zeitgenossen.
+
+Die Reiter "Veranstaltungen", "Meine Buchungen" und "Meine Angebote" werden nur noch angemeldeten Benutzern angezeigt.
+
+Es werden nun die bei den Kategorien eingestellten Zugriffsebenen berücksichtigt. Dadurch ist es möglich, dass bestimmte Kategorien nicht von unregistrierten Benutzern gesehen und somit die zugeordneten Veranstaltungen auch nicht gebucht werden können.
+
+Das Standardbild für die gewählte Kategorie wird nun richtig angezeigt.
+
+Der Fehler bei der Anzeige der in Eingabefelder eingetragenen Hochkommas wurde behoben.
+
+Beim Ausdruck aus dem Backend gab es Anzeigefehler, da der HTML-Kopf teilweise nicht richtig ausgegeben wurde. Der Fehler ist behoben.
+
+Auf einigen Systemen wurden die Veranstaltungsbeschreibungen immer fett angezeigt. Der Fehler ist behoben.
+
+Wenn man in den Parametern einstellt, dass keine Statusgrafik (Ampel, Diagramm) angezeigt werden soll, wird nun auch die Beschreibung der Farben unter der Seminarübersicht unterdrückt. 
+
+
+
+Neu in Version 1.28
+
+Ein Veranstalter kann nun eine Sammel-E-Mail an die Teilnehmer einer Veranstaltung verschicken.
+
+Auch nichtregistrierte Benutzer können Veranstaltungen buchen, sofern dies in den Parametern eingestellt wurde. Hierzu werden zwei Pflichteingabefelder angezeigt (Name und E-Mail), die durch weitere Eingabefelder (siehe unten) ergänzt werden können.
+
+In den Parametern kann eingestellt werden, ob für eine Buchung eine zusätzliche Bestätigung notwendig ist oder nicht.
+
+Jede Buchung erhält einen einmaligen Code, der auch in den CSV-Dateien steht. Dabei kann in den Parametern gewählt werden, ob dieser auf den Buchungslisten als Strichcode, als QR-Code oder gar nicht ausgedruckt wrden soll.
+
+In der Vorgängerversion funktionierte auf einigen Systemen das Versenden von Nachrichten und Werten der besuchten Veranstaltungen nicht. Dieser Fehler ist behoben.
+
+Wurden in den Parametern AGBs eingegeben, so ist eine Buchung nur möglich, wenn diese vom Benutzer akzeptiert wurden.
+
+Ein Benutzer mit dem Status Manager oder höher kann nun im Frontend auch die Veranstaltungen von Autoren verwalten bzw. neue Veranstaltungen in deren Namen eingeben.
+
+Im Frontend kann ein Autor nun Buchungen für Benutzer vornehmen und dabei auch alle Zusatzfelder ausfüllen. Die Buchungsmöglichkeit im Backend wurde entfernt.
+
+Eine Veranstaltung kann nun abgesagt werden. Die Benutzer, die bereits Plätze gebucht haben, werden über die Absage per E-Mail informiert. Eine Absage kann auch wieder rückgängig gemacht werden.
+
+Bei den zusätzlichen Eingabefeldern wird nun angezeigt, ob es sich um Pflichtfelder handelt.
+
+Die Zahl der zusätzlichen Eingabefelder wurde auf 10 erweitert.
+
+Die zusätzlichen Eingabefelder können nun auch als Auswahllisten bzw. -knöpfe und Textbereiche angezeigt werden. Die einzelnen Parameter werden dabei durch einen senkrechten Strich von einander getrennt. Diesen erzeugt man durch die Tastenkombination "AltGr<". Folgende Formatierungen sind möglich:
+"Wie findest du Seminar?|select|gut|schlecht|geht so": Auswahlliste mit den Optionen "gut", "schlecht" und "geht so>".
+"Wie findest du Seminar?|radio|gut|schlecht|geht so": Wie oben, nur erfolgt statt der Auswahlliste eine Entscheidung über Radio-Knöpfe.
+"Wollen Sie uns noch etwas mitteilen|textarea|40|4": Texteingabefeld der Breite 40 Zeichen und mit 4 Zeilen Höhe. Werden die Breiten- und Höhenangaben weggelassen, werden als Standardwerte 30 Zeichen Breite und 3 Zeilen Höhe verwendet.
+"E-Mail|email": Texteingabefeld, das auf korrekte Eingabe einer E-Mail-Adresse überprüft.
+
+Beim Ausdruck der Teilnehmerliste werden nun auch die gebuchten Plätze sowie die zu zahlende Gesamtgebühr angezeigt.
+
+Die Benutzer können ihre Buchungsangaben nachträglich ändern, falls dies in den Parametern eingestellt wurde.
+
+Statt der Ampel als Statusgrafik kann nun auch ein Säulendiagramm oder keine Grafik angzeigt werden (Parametereinstellung).
+
+Die Funktionsknöpfe können nun rechts oben, unten oder an beiden Positionen angezeigt werden (Parametereinstellung).
+
+Die Anzahl der beim ersten Aufruf angezeigten Veranstaltungen ist in den Parametern einstellbar.
+
+Bei der Angabe der Gebühren wurde der Text "pro Person" ergänzt, sofern in den Parametern eingestellt wurde, dass ein Benutzer mehrere Plätze buchen kann.
+
+Bei der Buchung von mehreren Plätzen wird der Gesamtpreis berechnet.
+
+Ein Bild, das im Backend für eine Kategorie gewählt wurde, wird nun in den Übersichten als Standardbild für diese Kategorie angezeigt.
+
+Für jede Veranstaltung kann ein Bild für die Anzeige in den Übersichten gewählt werden, sofern dies in den Parametern eingestellt wurde.
+
+In den Parametern kann eingestellt werden, wer die Teilnehmer eines Veranstaltung in der Übersicht ansehen darf (niemand, unregistrierte oder registrierte Benutzer).
+
+Der Fehler bei der Berechnung der freien Plätze im Backend wurde behoben.
+
+Ein Fehler beim Farbwechsel wurde behoben.
+
+Einige Grafiken wurden ergänzt.
+
+Viele Teile des Quellcodes wurden optimiert.
+
+
+
+Neu in Version 1.27
+
+Ein angemeldeter Benutzer kann nun mehrere Plätze auf einmal buchen (optional).
+
+In den Übersichten wurden auch die Titel der Veranstaltungen verlinkt.
+
+Die aktuelle Seminar-Funktion wird im Navigationspfad wiedergegeben.
+
+Angemeldete Benutzer können auch in der Veranstaltungsübersicht die Teilnehmer eines Kurses sehen (optional).
+
+Die Angaben in den zusätzlichen Eingabefeldern für jede Veranstaltung werden auch in den verschickten E-Mails angezeigt.
+
+Bei nicht angemeldeten Benutzern wurden in der Detailansicht die Veranstaltungen immer als buchbar angezeigt. Der Fehler ist behoben.
+
+Die zusätzlichen Eingabefelder werden bei nicht angemeldeten Benutzern ausgeblendet.
+
+
+
+Neu in Version 1.26
+
+In der Veranstaltungsübersicht ist die Infozeile mit den Angaben zu den freien Plätzen etc. ausblendbar (Einstellung in den Parametern).
+
+Ebenso kann die Ampel mit dem aktuellen Veranstaltungsstatus ausgeblendet werden.
+
+Die Währung wird nicht mehr in den Sprachdateien, sondern in den Parametern festgelegt.
+
+Es ist nun einstellbar, ob ein Veranstalter auch seine eigenen Kurse buchen darf.
+
+In den Parametern kann man nun einstellen, wie viele Tage vor Veranstaltungsbeginn ein Teilnehmer die Buchung stornieren darf. Auch ist das Storniern ganz abschaltbar.
+
+Die Google-Maps-Karte kann nun auch ohne Sprechblase als Verbindung zum Routenplaner angeeigt werden.
+
+Der Veranstalter kann bis zu 5 Eingabefelder definieren, die von einem Teilnehmer bei der Buchung auszufüllen sind.
+
+Die Buchungsdaten einer Veranstaltung können als CSV-Datei zur lokalen Weiterverarbeitung heruntergeladen werden.
+
+Ein Teilnehmer einer Veranstaltung kann nun die Namen der anderen Teilnehmer sehen (wenn gewünscht).
+
+Beim Editieren einer Veranstaltung im Frontend wird nun der bisher fehlende Knopf zum Duplizieren angezeigt. 
+
+Der Navigationspfad wird nun korrekt dargestellt.
+
+Seminar übernahm immer die Formatierung der Startseite mit den entsprechenden Modulen. Dieser Fehler ist behoben.
+
+
+Neu in Version 1.25
+
+Einbindung der Google-Maps-API in Seminar für joomla!. Damit kann man sich nun den Veranstaltungsort bzw. die Route zum Veranstaltungsort in Google-Maps anzeigen lassen.
+
+Umprogrammierung der Installationsroutine, um nicht nur eine Neuinstallation, sondern auch ein Upgrade durchführen zu können.
+
+Zahlreiche Bilder wurden ausgetauscht. 
+
+
+Neu in Version 1.24
+
+In der Übersicht wird den angemeldeten Benutzern angezeigt, welche der Veranstaltungen von ihnen schon gebucht wurden, bzw. welche von Ihnen veranstaltet werden. Dazu wurden einige Grafiken ausgetauscht. 
+
+
+Behobene Fehler in der Version 1.24
+
+Der Zeitfehler (je nach Zeitzone Unterschied zwischen angegebener und angezeigter Start- und Endzeit) wurde behoben.
+
+Bei der Verwendung eines Editors werden eingebundene Grafiken nun richtig in der Beschreibung der Veranstaltung angezeigt.
+
+Das falsche Format in der Datumsausgabe der E-Mails wurde korrigiert, ebenso in der Ansicht "Meine Buchungen".
+
+
+Neu in Version 1.23
+
+Seminar läuft nun auch, wenn die suchmaschinenfreundlichen URLs (SEF bzw. SEO) in joomla! aktiviert sind.
+
+Die Referenzierung auf die Barcode-Grafiken funktioniert nun richtig, auch wenn joomla! nicht im Root installiert wurde.
+
+Bei einigen Templates kam es zu Problemen mit der Seitennavigation. Daher habe ich eine eigene Seitennavigation programmiert, die das Problem behebt.  

@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+<name>Seminar</name>
+<author>Dirk Vollmar</author>
+<version>1.3</version>
+<description>Definition for the core seminar component</description>
+<reference>
+<table name="seminar">
+<field type="referenceid" name="id" translate="0">ID</field>
+<field type="titletext" name="title" length="50" maxlength="250" translate="1">Title</field>
+<field type="textarea" name="shortdesc" translate="1">Brief description</field>
+<field type="textarea" name="place" translate="1">Location</field>
+<field type="htmltext" name="description" translate="1">Description</field>^
+<field type="text" name="teacher" translate="1">Tutor</field>
+<field type="text" name="target" translate="1">Target group</field>
+<field type="text" name="zusatz1" translate="1">Common input 1</field>
+<field type="text" name="zusatz1hint" translate="1">Input hint 1</field>
+<field type="text" name="zusatz2" translate="1">Common input 2</field>
+<field type="text" name="zusatz2hint" translate="1">Input hint 2</field>
+<field type="text" name="zusatz3" translate="1">Common input 3</field>
+<field type="text" name="zusatz3hint" translate="1">Input hint 3</field>
+<field type="text" name="zusatz4" translate="1">Common input 4</field>
+<field type="text" name="zusatz4hint" translate="1">Input hint 4</field>
+<field type="text" name="zusatz5" translate="1">Common input 5</field>
+<field type="text" name="zusatz5hint" translate="1">Input hint 5</field>
+<field type="text" name="zusatz6" translate="1">Common input 6</field>
+<field type="text" name="zusatz6hint" translate="1">Input hint 6</field>
+<field type="text" name="zusatz7" translate="1">Common input 7</field>
+<field type="text" name="zusatz7hint" translate="1">Input hint 7</field>
+<field type="text" name="zusatz8" translate="1">Common input 8</field>
+<field type="text" name="zusatz8hint" translate="1">Input hint 8</field>
+<field type="text" name="zusatz9" translate="1">Common input 9</field>
+<field type="text" name="zusatz9hint" translate="1">Input hint 9</field>
+<field type="text" name="zusatz10" translate="1">Common input 10</field>
+<field type="text" name="zusatz10hint" translate="1">Input hint 10</field>
+<field type="text" name="zusatz11" translate="1">Common input 11</field>
+<field type="text" name="zusatz11hint" translate="1">Input hint 11</field>
+<field type="text" name="zusatz12" translate="1">Common input 12</field>
+<field type="text" name="zusatz12hint" translate="1">Input hint 12</field>
+<field type="text" name="zusatz13" translate="1">Common input 13</field>
+<field type="text" name="zusatz13hint" translate="1">Input hint 13</field>
+<field type="text" name="zusatz14" translate="1">Common input 14</field>
+<field type="text" name="zusatz14hint" translate="1">Input hint 14</field>
+<field type="text" name="zusatz15" translate="1">Common input 15</field>
+<field type="text" name="zusatz15hint" translate="1">Input hint 15</field>
+<field type="text" name="zusatz16" translate="1">Common input 16</field>
+<field type="text" name="zusatz16hint" translate="1">Input hint 16</field>
+<field type="text" name="zusatz17" translate="1">Common input 17</field>
+<field type="text" name="zusatz17hint" translate="1">Input hint 17</field>
+<field type="text" name="zusatz18" translate="1">Common input 18</field>
+<field type="text" name="zusatz18hint" translate="1">Input hint 18</field>
+<field type="text" name="zusatz19" translate="1">Common input 19</field>
+<field type="text" name="zusatz19hint" translate="1">Input hint 19</field>
+<field type="text" name="zusatz20" translate="1">Common input 20</field>
+<field type="text" name="zusatz20hint" translate="1">Input hint 20</field>
+<field type="text" name="file1desc" translate="1">File description 1</field>
+<field type="text" name="file2desc" translate="1">File description 2</field>
+<field type="text" name="file3desc" translate="1">File description 3</field>
+<field type="text" name="file4desc" translate="1">File description 4</field>
+<field type="text" name="file5desc" translate="1">File description 5</field>
+</table>
+</reference>
+</joomfish>

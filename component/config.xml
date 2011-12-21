@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <params>
+
+// -----------------------------------------------------  
+//  Darf ein Autor im Frontend Veranstaltungen eingeben 
+// -----------------------------------------------------  
+    <param name="sem_p001" type="list" default="3" label="SEM_P001">
+      <option value="20">SEM_P038</option>
+      <option value="3">AUTHOR</option>
+      <option value="4">EDITOR</option>
+      <option value="5">PUBLISHER</option>
+      <option value="6">MANAGER</option>
+      <option value="7">ADMINISTRATOR</option>
+      <option value="8">SUPER ADMINISTRATOR</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Darf ein unregistrierter Nutzer Veranstaltungen buchen 
+// -------------------------------------------------------
+    <param name="sem_p026" type="radio" default="0" label="SEM_P026">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+    
+// -------------------------------------------------------
+//  Darf ein Veranstalter seine eigenen Kurse buchen 
+// -------------------------------------------------------
+    <param name="sem_p002" type="radio" default="0" label="SEM_P002">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Soll vor der Buchung eine Abfrage zur Bestaetigung erfolgen 
+// -------------------------------------------------------
+    <param name="sem_p027" type="radio" default="0" label="SEM_P027">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Soll vor der Stornierung eine Abfrage zur Bestaetigung erfolgen 
+// -------------------------------------------------------
+    <param name="sem_p028" type="radio" default="1" label="SEM_P028">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Darf ein Nutzer Listen etc. ausdrucken 
+// -------------------------------------------------------
+    <param name="sem_p005" type="radio" default="0" label="SEM_P005">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Welcher Code soll auf den Listen angezeigt werden 
+// -------------------------------------------------------
+    <param name="sem_p029" type="radio" default="1" label="SEM_P029">
+      <option value="0">SEM_P038</option>
+      <option value="1">SEM_P044</option>
+      <option value="2">SEM_P043</option>
+    </param>
+
+// -------------------------------------------------------
+//  Darf ein Nutzer ICS-Dateien herunterladen 
+// -------------------------------------------------------
+    <param name="sem_p052" type="radio" default="0" label="SEM_P052">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Welche Nutzer duerfen die Namen der Teilnehmer sehen 
+// -------------------------------------------------------
+    <param name="sem_p030" type="radio" default="0" label="SEM_P030">
+      <option value="0">SEM_P038</option>
+      <option value="1">SEM_P041</option>
+      <option value="2">SEM_P042</option>
+    </param>
+
+// -------------------------------------------------------
+//  Darf ein Teilnehmer die Namen der anderen Teilnehmer sehen 
+// -------------------------------------------------------
+    <param name="sem_p007" type="radio" default="0" label="SEM_P007">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Welche Namen sollen angezeigt werden 
+// -------------------------------------------------------
+    <param name="sem_p058" type="radio" default="1" label="SEM_P058">
+      <option value="0">SEM_P059</option>
+      <option value="1">SEM_P060</option>
+    </param>
+
+// -------------------------------------------------------
+//  Darf ein Veranstalter die Buchungen bearbeiten 
+// -------------------------------------------------------
+    <param name="sem_p031" type="radio" default="1" label="SEM_P031">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Soll das Bewerungssystem genutzt werden 
+// -------------------------------------------------------
+    <param name="sem_p004" type="radio" default="0" label="SEM_P004">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Soll das Zertifikationssystem genutzt werden 
+// -------------------------------------------------------
+    <param name="sem_p003" type="radio" default="0" label="SEM_P003">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Darf ein Nutzer sein Zertifikat ausdrucken 
+// -------------------------------------------------------
+    <param name="sem_p006" type="radio" default="0" label="SEM_P006">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  HTML-Code des Zertifikats 
+// -------------------------------------------------------
+    <param name="sem_p008" type="textarea" rows="6" cols="40" label="SEM_P008">
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Sollen Mails an Nutzer verschickt werden 
+// -------------------------------------------------------
+    <param name="sem_p010" type="radio" default="0" label="SEM_P010">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Sollen Mails an Verantalter verschickt werden 
+// -------------------------------------------------------
+    <param name="sem_p009" type="radio" default="0" label="SEM_P009">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Darf eine Kontaktmail an den Veranstalter geschickt werden 
+// -------------------------------------------------------
+    <param name="sem_p011" type="radio" default="0" label="SEM_P011">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  API-Schluessel fuer Google-Maps 
+// -------------------------------------------------------
+    <param name="sem_p012" type="text" size="40" label="SEM_P012">
+    </param>
+
+// -------------------------------------------------------
+//  Soll im Kartenfenster eine Sprechblase angezeigt werden 
+// -------------------------------------------------------
+    <param name="sem_p013" type="radio" default="1" label="SEM_P013">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Darf einem Kurs ein Bild zugewiesen werden 
+// -------------------------------------------------------
+    <param name="sem_p032" type="radio" default="0" label="SEM_P032">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Verzeichnis der Grafiken 
+// -------------------------------------------------------
+    <param name="sem_p033" type="text" size="40" label="SEM_P033">
+    </param>
+
+// -------------------------------------------------------
+//  Sollen Statusgrafiken auf den Bildern angezeigt werden 
+// -------------------------------------------------------
+    <param name="sem_p034" type="radio" default="1" label="SEM_P034">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Groesse der hochladbaren Dateien 
+// -------------------------------------------------------
+    <param name="sem_p056" type="text" size="40" label="SEM_P056" default="200">
+    </param>
+
+// -------------------------------------------------------
+//  Endungen der hochladbaren Dateien 
+// -------------------------------------------------------
+    <param name="sem_p057" type="text" size="40" label="SEM_P057" default="txt zip pdf">
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Soll die Infozeile angezeigt werden 
+// -------------------------------------------------------
+    <param name="sem_p014" type="radio" default="0" label="SEM_P014">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Welche Statusgrafik soll angezeigt werden 
+// -------------------------------------------------------
+    <param name="sem_p025" type="radio" default="2" label="SEM_P025">
+      <option value="0">SEM_P038</option>
+      <option value="1">SEM_P039</option>
+      <option value="2">SEM_P040</option>
+    </param>
+
+// -------------------------------------------------------
+//  Wo sollen die Knoepfe angezeigt werden 
+// -------------------------------------------------------
+    <param name="sem_p024" type="radio" default="2" label="SEM_P024">
+      <option value="0">SEM_P035</option>
+      <option value="1">SEM_P036</option>
+      <option value="2">SEM_P037</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Waehrungssymbol 
+// -------------------------------------------------------
+    <param name="sem_p017" type="text" size="40" label="SEM_P017">
+    </param>
+
+// -------------------------------------------------------
+//  Dezimalstellen 
+// -------------------------------------------------------
+    <param name="sem_p061" type="list" label="SEM_P061" default="2">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </param>
+
+// -------------------------------------------------------
+//  Tausender-Trennzeichen 
+// -------------------------------------------------------
+    <param name="sem_p062" type="text" size="1" label="SEM_P062" default="">
+    </param>
+
+// -------------------------------------------------------
+//  Dezimal-Trennzeichen 
+// -------------------------------------------------------
+    <param name="sem_p063" type="text" size="1" label="SEM_P063" default="">
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Datumsformat der Uebersichten
+// -------------------------------------------------------
+    <param name="sem_p066" type="text" size="40" label="SEM_P066" default="">
+    </param>
+
+// -------------------------------------------------------
+//  Datumsformat der Detailansichten
+// -------------------------------------------------------
+    <param name="sem_p067" type="text" size="40" label="SEM_P067" default="">
+    </param>
+
+// -------------------------------------------------------
+//  Datumsformat der Listen
+// -------------------------------------------------------
+    <param name="sem_p068" type="text" size="40" label="SEM_P068" default="">
+    </param>
+
+// -------------------------------------------------------
+//  Datumsformat 
+// -------------------------------------------------------
+    <param name="sem_p069" type="text" size="40" label="SEM_P069" default="">
+    </param>
+
+// -------------------------------------------------------
+//  Zeitformat 
+// -------------------------------------------------------
+    <param name="sem_p070" type="text" size="40" label="SEM_P070" default="">
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Zeichenkodierung fuer den CSV-Export
+// -------------------------------------------------------
+    <param name="sem_p015" type="text" size="40" label="SEM_P015">
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Darf ein Nutzer mehrere Plaetze buchen 
+// -------------------------------------------------------
+    <param name="sem_p023" type="radio" default="0" label="SEM_P023">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+// -------------------------------------------------------
+//  Darf ein Nutzer seine Buchung veraendern 
+// -------------------------------------------------------
+    <param name="sem_p022" type="radio" default="0" label="SEM_P022">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Stornierungsende in Tagen vor Beginn eines Kurses 
+// -------------------------------------------------------
+    <param name="sem_p018" type="list" default="0" label="SEM_P018">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="-1">SEM_P016</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Anzeigeende der aktuellen Kurse
+// -------------------------------------------------------
+    <param name="sem_p064" type="radio" default="2" label="SEM_P064">
+      <option value="0">SEM_0009</option>
+      <option value="2">SEM_0010</option>
+      <option value="1">SEM_0011</option>
+    </param>
+
+/ -------------------------------------------------------
+//  Festlegung der Anzahl der angezeigten Kurse 
+// -------------------------------------------------------
+    <param name="sem_p021" type="list" default="5" label="SEM_P021">
+      <option value="3">3</option>
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="25">25</option>
+      <option value="30">30</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+      <option value="0">all</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Module der oberen Navigation Veranstaltungen 
+// -------------------------------------------------------
+    <param name="sem_p053" type="text" size="40" default="SEM_NUMBER SEM_SEARCH SEM_CATEGORIES SEM_RESET" label="SEM_P053">
+    </param>
+
+// -------------------------------------------------------
+//  Module der oberen Navigation Meine Buchungen 
+// -------------------------------------------------------
+    <param name="sem_p054" type="text" size="40" default="SEM_NUMBER SEM_SEARCH SEM_TYPES SEM_RESET" label="SEM_P054">
+    </param>
+
+// -------------------------------------------------------
+//  Module der oberen Navigation Meine Angebote 
+// -------------------------------------------------------
+    <param name="sem_p055" type="text" size="40" default="SEM_NUMBER SEM_SEARCH SEM_TYPES SEM_RESET" label="SEM_P055">
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Beruecksichtige automatisch die Sommerzeit
+// -------------------------------------------------------
+    <param name="sem_p065" type="radio" default="0" label="SEM_P065">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  AGBs 
+// -------------------------------------------------------
+    <param name="sem_p020" type="textarea" rows="6" cols="40" label="SEM_P020">
+    </param>
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Code zum entfernen des Copyright
+// -------------------------------------------------------
+    <param name="sem_p019" type="text" size="40" label="SEM_P019">
+    </param>
+
+// -------------------------------------------------------
+//  Farbgebung des Templates 
+// -------------------------------------------------------
+    <param name="sem_p045" type="radio" default="0" label="SEM_P045">
+      <option value="0">SEM_P046</option>
+      <option value="1">SEM_P047</option>
+    </param>
+
+// -------------------------------------------------------
+//  Soll unangemeldeten Benutzern das Anmeldeformular angezeigt werden?  
+// -------------------------------------------------------
+    <param name="sem_p051" type="radio" default="1" label="SEM_P051">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+    <param type="spacer" />
+
+// -------------------------------------------------------
+//  Sollen RSS-Feeds angezeigt werden 
+// -------------------------------------------------------
+    <param name="sem_p048" type="radio" default="0" label="SEM_P048">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+
+
+// -------------------------------------------------------
+//  Sollen Name und E-Mail des veranstalters veröffentlicht werden 
+// -------------------------------------------------------
+    <param name="sem_p050" type="radio" default="0" label="SEM_P050">
+      <option value="0">SEM_0006</option>
+      <option value="1">SEM_0005</option>
+    </param>
+  </params>
+</config>

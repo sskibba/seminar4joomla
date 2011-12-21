@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<install method="upgrade" type="component" version="1.5.0">
+  <name>Seminar</name>
+  <creationDate>2009-10-31</creationDate>
+  <author>Dirk Vollmar</author>
+  <copyright>(C) 2004 - 2009 Dirk Vollmar.</copyright>
+  <license>http://www.gnu.org/licenses/gpl.html</license>
+  <authorEmail>seminar@vollmar.ws</authorEmail>
+  <authorUrl>http://seminar.vollmar.ws</authorUrl>
+  <version>1.3.0</version>
+  <files>
+    <filename>index.html</filename>
+    <filename>seminar.php</filename>
+    <filename>seminar.html.php</filename>
+    <filename>seminar.class.php</filename>
+    <filename>seminar.code.php</filename>
+    <filename>seminar.gmap.php</filename>
+    <filename>css/index.html</filename>
+    <filename>css/seminar.0.css</filename>
+    <filename>css/seminar.1.css</filename>
+    <filename>images/index.html</filename>
+    <filename>images/0000.png</filename>
+    <filename>images/0001.png</filename>
+    <filename>images/0002.png</filename>
+    <filename>images/0003.png</filename>
+    <filename>images/0004.png</filename>
+    <filename>images/0005.png</filename>
+    <filename>images/0006.png</filename>
+    <filename>images/0007.png</filename>
+    <filename>images/0008.png</filename>
+    <filename>images/0009.png</filename>
+    <filename>images/0012.png</filename>
+    <filename>images/0016.png</filename>
+    <filename>images/0032.png</filename>
+    <filename>images/1016.png</filename>
+    <filename>images/1032.png</filename>
+    <filename>images/1116.png</filename>
+    <filename>images/1132.png</filename>
+    <filename>images/1216.png</filename>
+    <filename>images/1232.png</filename>
+    <filename>images/1316.png</filename>
+    <filename>images/1332.png</filename>
+    <filename>images/1416.png</filename>
+    <filename>images/1432.png</filename>
+    <filename>images/1516.png</filename>
+    <filename>images/1532.png</filename>
+    <filename>images/1616.png</filename>
+    <filename>images/1632.png</filename>
+    <filename>images/1716.png</filename>
+    <filename>images/1732.png</filename>
+    <filename>images/1816.png</filename>
+    <filename>images/1832.png</filename>
+    <filename>images/1916.png</filename>
+    <filename>images/1932.png</filename>
+    <filename>images/2016.png</filename>
+    <filename>images/2032.png</filename>
+    <filename>images/2100.png</filename>
+    <filename>images/2110.png</filename>
+    <filename>images/2111.png</filename>
+    <filename>images/2112.png</filename>
+    <filename>images/2116.png</filename>
+    <filename>images/2120.png</filename>
+    <filename>images/2121.png</filename>
+    <filename>images/2122.png</filename>
+    <filename>images/2200.png</filename>
+    <filename>images/2201.png</filename>
+    <filename>images/2202.png</filename>
+    <filename>images/2300.png</filename>
+    <filename>images/2301.png</filename>
+    <filename>images/2302.png</filename>
+    <filename>images/2400.png</filename>
+    <filename>images/2401.png</filename>
+    <filename>images/2402.png</filename>
+    <filename>images/2403.png</filename>
+    <filename>images/2404.png</filename>
+    <filename>images/2405.png</filename>
+    <filename>images/2406.png</filename>
+    <filename>images/2500.png</filename>
+    <filename>images/2501.png</filename>
+    <filename>images/2502.png</filename>
+    <filename>images/2600.png</filename>
+    <filename>images/2601.png</filename>
+    <filename>images/2602.png</filename>
+    <filename>images/2603.png</filename>
+    <filename>images/2604.png</filename>
+    <filename>images/2606.png</filename>
+    <filename>images/2607.png</filename>
+    <filename>images/2700.png</filename>
+    <filename>images/2701.png</filename>
+    <filename>images/2800.png</filename>
+    <filename>images/2801.png</filename>
+    <filename>images/2900.png</filename>
+    <filename>images/3000.png</filename>
+    <filename>images/3001.png</filename>
+    <filename>images/3116.png</filename>
+    <filename>images/3132.png</filename>
+    <filename>images/3216.png</filename>
+    <filename>images/3232.png</filename>
+    <filename>images/3316.png</filename>
+    <filename>images/3332.png</filename>
+    <filename>images/certificate.png</filename>
+    <filename>images/donate.png</filename>
+    <filename>images/logo.png</filename>
+    <filename>images/logo-de.png</filename>
+    <filename>images/logo-fr.png</filename>
+    <filename>images/menulogo.png</filename>
+    <filename>images/pin.png</filename>
+    <filename>images/shadow.png</filename>
+  </files>
+  <install>
+    <queries>
+      <query>CREATE TABLE IF NOT EXISTS `#__seminar` (
+      `id` int(12) NOT NULL auto_increment,
+      `sid` int(11) NOT NULL default '0',
+      `semnum` varchar(100) NOT NULL default '',
+      `catid` int(11) NOT NULL default '1',
+      `title` varchar(255) NOT NULL default '',
+      `target` varchar(255) NOT NULL default '',
+      `shortdesc` mediumtext NOT NULL default '',
+      `description` mediumtext NOT NULL default '',
+      `place` text NOT NULL default '',
+      `teacher` varchar(120) NOT NULL default '',
+      `fees` varchar(10) NOT NULL default '0',
+      `maxpupil` int(5) NOT NULL default '0',
+      `bookedpupil` int(5) NOT NULL default '0',
+      `stopbooking` tinyint(1) NOT NULL default '0',
+      `cancelled` tinyint(1) NOT NULL default '0',
+      `begin` datetime NOT NULL default '0000-00-00 00:00:00',
+      `end` datetime NOT NULL default '0000-00-00 00:00:00',
+      `booked` datetime NOT NULL default '0000-00-00 00:00:00',
+      `showbegin` tinyint(1) NOT NULL default '1',
+      `showend` tinyint(1) NOT NULL default '1',
+      `showbooked` tinyint(1) NOT NULL default '1',
+      `checked_out` int(11) unsigned NOT NULL default '0',
+      `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
+      `ordering` int(11) NOT NULL default '0',
+      `published` tinyint(1) NOT NULL default '0',
+      `updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+      `publishdate` datetime NOT NULL default '0000-00-00 00:00:00',
+      `publisher` int(11) NOT NULL default '0',
+      `access` int(11) unsigned NOT NULL default '0',
+      `hits` int(11) NOT NULL default '0',
+      `grade` tinyint(1) NOT NULL default '0',
+      `certificated` int(5) NOT NULL default '0',
+      `paid` int(11) NOT NULL default '0',
+      `gmaploc` varchar(120) NOT NULL default '',
+      `nrbooked` int(5) NOT NULL default '1',
+      `pattern` varchar(100) NOT NULL default '',
+      `zusatz1` text NOT NULL default '',
+      `zusatz2` text NOT NULL default '',
+      `zusatz3` text NOT NULL default '',
+      `zusatz4` text NOT NULL default '',
+      `zusatz5` text NOT NULL default '',
+      `zusatz6` text NOT NULL default '',
+      `zusatz7` text NOT NULL default '',
+      `zusatz8` text NOT NULL default '',
+      `zusatz9` text NOT NULL default '',
+      `zusatz10` text NOT NULL default '',
+      `zusatz11` text NOT NULL default '',
+      `zusatz12` text NOT NULL default '',
+      `zusatz13` text NOT NULL default '',
+      `zusatz14` text NOT NULL default '',
+      `zusatz15` text NOT NULL default '',
+      `zusatz16` text NOT NULL default '',
+      `zusatz17` text NOT NULL default '',
+      `zusatz18` text NOT NULL default '',
+      `zusatz19` text NOT NULL default '',
+      `zusatz20` text NOT NULL default '',
+      `zusatz1hint` text NOT NULL default '',
+      `zusatz2hint` text NOT NULL default '',
+      `zusatz3hint` text NOT NULL default '',
+      `zusatz4hint` text NOT NULL default '',
+      `zusatz5hint` text NOT NULL default '',
+      `zusatz6hint` text NOT NULL default '',
+      `zusatz7hint` text NOT NULL default '',
+      `zusatz8hint` text NOT NULL default '',
+      `zusatz9hint` text NOT NULL default '',
+      `zusatz10hint` text NOT NULL default '',
+      `zusatz11hint` text NOT NULL default '',
+      `zusatz12hint` text NOT NULL default '',
+      `zusatz13hint` text NOT NULL default '',
+      `zusatz14hint` text NOT NULL default '',
+      `zusatz15hint` text NOT NULL default '',
+      `zusatz16hint` text NOT NULL default '',
+      `zusatz17hint` text NOT NULL default '',
+      `zusatz18hint` text NOT NULL default '',
+      `zusatz19hint` text NOT NULL default '',
+      `zusatz20hint` text NOT NULL default '',
+      `zusatz1show` tinyint(1) NOT NULL default '0',
+      `zusatz2show` tinyint(1) NOT NULL default '0',
+      `zusatz3show` tinyint(1) NOT NULL default '0',
+      `zusatz4show` tinyint(1) NOT NULL default '0',
+      `zusatz5show` tinyint(1) NOT NULL default '0',
+      `zusatz6show` tinyint(1) NOT NULL default '0',
+      `zusatz7show` tinyint(1) NOT NULL default '0',
+      `zusatz8show` tinyint(1) NOT NULL default '0',
+      `zusatz9show` tinyint(1) NOT NULL default '0',
+      `zusatz10show` tinyint(1) NOT NULL default '0',
+      `zusatz11show` tinyint(1) NOT NULL default '0',
+      `zusatz12show` tinyint(1) NOT NULL default '0',
+      `zusatz13show` tinyint(1) NOT NULL default '0',
+      `zusatz14show` tinyint(1) NOT NULL default '0',
+      `zusatz15show` tinyint(1) NOT NULL default '0',
+      `zusatz16show` tinyint(1) NOT NULL default '0',
+      `zusatz17show` tinyint(1) NOT NULL default '0',
+      `zusatz18show` tinyint(1) NOT NULL default '0',
+      `zusatz19show` tinyint(1) NOT NULL default '0',
+      `zusatz20show` tinyint(1) NOT NULL default '0',
+      `image` varchar(120) NOT NULL default '',
+      `file1` varchar(100) NOT NULL default '',
+      `file2` varchar(100) NOT NULL default '',
+      `file3` varchar(100) NOT NULL default '',
+      `file4` varchar(100) NOT NULL default '',
+      `file5` varchar(100) NOT NULL default '',
+      `file1desc` varchar(255) NOT NULL default '',
+      `file2desc` varchar(255) NOT NULL default '',
+      `file3desc` varchar(255) NOT NULL default '',
+      `file4desc` varchar(255) NOT NULL default '',
+      `file5desc` varchar(255) NOT NULL default '',
+      `file1down` tinyint(1) NOT NULL default '0',
+      `file2down` tinyint(1) NOT NULL default '0',
+      `file3down` tinyint(1) NOT NULL default '0',
+      `file4down` tinyint(1) NOT NULL default '0',
+      `file5down` tinyint(1) NOT NULL default '0',
+      `file1code` mediumtext NOT NULL default '',
+      `file2code` mediumtext NOT NULL default '',
+      `file3code` mediumtext NOT NULL default '',
+      `file4code` mediumtext NOT NULL default '',
+      `file5code` mediumtext NOT NULL default '',
+      PRIMARY KEY (`id`)
+      ) COMMENT='Seminar Events';
+      </query>
+      <query>CREATE TABLE IF NOT EXISTS `#__sembookings` (
+      `id` int(12) NOT NULL auto_increment,
+      `name` text NOT NULL default '',
+      `email` text NOT NULL default '',
+      `sid` int(11) NOT NULL default '0',
+      `semid` int(11) NOT NULL default '1',
+      `userid` int(11) NOT NULL default '1',
+      `certificated` tinyint(1) NOT NULL default '0',
+      `bookingdate` datetime NOT NULL default '0000-00-00 00:00:00',
+      `updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+      `grade` tinyint(1) NOT NULL default '0',
+      `comment` varchar(200) NOT NULL default '',
+      `paid` tinyint(1) NOT NULL default '0',
+      `nrbooked` int(11) NOT NULL default '1',
+      `zusatz1` text NOT NULL default '',
+      `zusatz2` text NOT NULL default '',
+      `zusatz3` text NOT NULL default '',
+      `zusatz4` text NOT NULL default '',
+      `zusatz5` text NOT NULL default '',
+      `zusatz6` text NOT NULL default '',
+      `zusatz7` text NOT NULL default '',
+      `zusatz8` text NOT NULL default '',
+      `zusatz9` text NOT NULL default '',
+      `zusatz10` text NOT NULL default '',
+      `zusatz11` text NOT NULL default '',
+      `zusatz12` text NOT NULL default '',
+      `zusatz13` text NOT NULL default '',
+      `zusatz14` text NOT NULL default '',
+      `zusatz15` text NOT NULL default '',
+      `zusatz16` text NOT NULL default '',
+      `zusatz17` text NOT NULL default '',
+      `zusatz18` text NOT NULL default '',
+      `zusatz19` text NOT NULL default '',
+      `zusatz20` text NOT NULL default '',
+      PRIMARY KEY (`id`)
+      ) COMMENT='Seminar Bookings';
+      </query>
+      <query>CREATE TABLE IF NOT EXISTS `#__semnumber` (
+      `id` int(12) NOT NULL auto_increment,
+      `number` int(11) NOT NULL default '0',
+      `year` int(11) NOT NULL default '0',
+      PRIMARY KEY (`id`)
+      ) COMMENT='Seminar Event Numbers';
+      </query>
+   </queries>
+  </install>
+  <uninstall>
+    <queries>
+      <query>DROP TABLE IF EXISTS `#__seminar`</query>
+      <query>DROP TABLE IF EXISTS `#__sembookings`</query>
+      <query>DROP TABLE IF EXISTS `#__semnumber`</query>
+      <query>DELETE FROM `#__categories` WHERE `section` LIKE 'com_seminar'</query>
+    </queries>
+  </uninstall>
+  <languages>
+    <language tag="de-DE">site/de-DE.com_seminar.ini</language>
+    <language tag="en-GB">site/en-GB.com_seminar.ini</language>
+  </languages>
+  <administration>
+    <menu img="components/com_seminar/images/icon-16-sem_logo.png">Seminar</menu>
+    <submenu>
+      <menu task="2" img="components/com_seminar/images/icon-16-sem_event.png">EVENTS</menu>
+      <menu task="1" img="components/com_seminar/images/icon-16-sem_pattern.png">TEMPLATES</menu>
+      <menu link="option=com_categories&amp;section=com_seminar" img="components/com_seminar/images/icon-16-sem_category.png">CATEGORIES</menu>
+      <menu task="3" img="components/com_seminar/images/icon-16-sem_config.png">CONFIGURATION</menu>
+      <menu task="4" img="components/com_seminar/images/icon-16-sem_statistic.png">STATISTICS</menu>
+    </submenu>
+    <files>
+      <filename>index.html</filename>
+      <filename>install.seminar.php</filename>
+      <filename>uninstall.seminar.php</filename>
+      <filename>admin.seminar.php</filename>
+      <filename>admin.seminar.html.php</filename>
+      <filename>seminar.xml</filename>
+      <filename>config.xml</filename>
+      <filename>css/index.html</filename>
+      <filename>css/icon.css</filename>
+      <filename>joomfish/index.html</filename>
+      <filename>joomfish/jf_seminar.xml</filename>
+      <filename>images/index.html</filename>
+      <filename>images/icon-48-sem_config.png</filename>
+      <filename>images/icon-48-sem_event.png</filename>
+      <filename>images/icon-48-sem_info.png</filename>
+      <filename>images/icon-48-sem_logo.png</filename>
+      <filename>images/icon-48-sem_pattern.png</filename>
+      <filename>images/icon-48-sem_payctrl.png</filename>
+      <filename>images/icon-48-sem_statistic.png</filename>
+      <filename>images/icon-16-sem_category.png</filename>
+      <filename>images/icon-16-sem_config.png</filename>
+      <filename>images/icon-16-sem_event.png</filename>
+      <filename>images/icon-16-sem_info.png</filename>
+      <filename>images/icon-16-sem_logo.png</filename>
+      <filename>images/icon-16-sem_pattern.png</filename>
+      <filename>images/icon-16-sem_payctrl.png</filename>
+      <filename>images/icon-16-sem_statistic.png</filename>
+    </files>
+    <languages>
+      <language tag="de-DE">admin/de-DE.com_seminar.ini</language>
+      <language tag="de-DE">admin/de-DE.com_seminar.menu.ini</language>
+      <language tag="en-GB">admin/en-GB.com_seminar.ini</language>
+      <language tag="en-GB">admin/en-GB.com_seminar.menu.ini</language>
+    </languages>
+  </administration>
+  <installfile>install.seminar.php</installfile>
+  <uninstallfile>uninstall.seminar.php</uninstallfile>
+</install>
