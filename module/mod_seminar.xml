@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<install method="upgrade" type="module" version="1.5.0">
+  <name>Seminar Modul</name>
+  <creationDate>2009-10-13</creationDate>
+  <author>Dirk Vollmar</author>
+  <copyright>(C) 2009 Dirk Vollmar.</copyright>
+  <license>http://www.gnu.org/licenses/gpl.html</license>
+  <authorEmail>seminar@vollmar.ws</authorEmail>
+  <authorUrl>http://seminar.vollmar.ws</authorUrl>
+  <version>1.2.2</version>
+  <description>Seminar - Modul</description>
+  <files>
+    <filename module="mod_seminar">mod_seminar.php</filename>
+    <filename module="mod_seminar">index.html</filename>
+    <filename module="mod_seminar">images/2608.png</filename>
+    <filename module="mod_seminar">images/2609.png</filename>
+  </files>
+  <languages>
+    <language tag="de-DE">de-DE.mod_seminar.ini</language>
+    <language tag="en-GB">en-GB.mod_seminar.ini</language>
+  </languages>
+  <params>
+
+// -------------------------------------------------------
+//  Modulklassensuffix abfragen 
+// -------------------------------------------------------
+    <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX">
+    </param>
+
+// -------------------------------------------------------
+//  Art der Anzeige 
+// -------------------------------------------------------
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="sem_m039" type="radio" default="0" label="SEM_M039" description="SEM_M038">
+      <option value="0">SEM_M040</option>
+      <option value="1">SEM_M041</option>
+      <option value="2">SEM_M044</option>
+    </param>
+
+// -------------------------------------------------------
+//  Statistik 
+// -------------------------------------------------------
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="mod_sem_space1" label="SEM_M040">
+    </param>
+
+// -------------------------------------------------------
+//  S - alle Veranstaltungen 
+// -------------------------------------------------------
+    <param name="sem_m035" type="radio" default="1" label="SEM_M035" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  S - aktuelle Veranstaltungen 
+// -------------------------------------------------------
+    <param name="sem_m037" type="radio" default="1" label="SEM_M037" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  S - alte Veranstaltungen 
+// -------------------------------------------------------
+    <param name="sem_m036" type="radio" default="1" label="SEM_M036" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  Statistik und Veranstaltungen 
+// -------------------------------------------------------
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="mod_sem_space0" label="SEM_M043">
+    </param>
+
+// -------------------------------------------------------
+//  SuV - Zugriffe 
+// -------------------------------------------------------
+    <param name="sem_m034" type="radio" default="1" label="SEM_M034" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  SuV - gebuchte Plaetze 
+// -------------------------------------------------------
+    <param name="sem_m028" type="radio" default="1" label="SEM_M028" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  SuV - freie Plaetze 
+// -------------------------------------------------------
+    <param name="sem_m033" type="radio" default="1" label="SEM_M033" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  SuV - Buchungen 
+// -------------------------------------------------------
+    <param name="sem_m029" type="radio" default="1" label="SEM_M029" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  SuV - bezahlte Buchungen 
+// -------------------------------------------------------
+    <param name="sem_m030" type="radio" default="1" label="SEM_M030" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  SuV - Zertifikate 
+// -------------------------------------------------------
+    <param name="sem_m031" type="radio" default="1" label="SEM_M031" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  Veranstaltungen 
+// -------------------------------------------------------
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="mod_sem_space2" label="SEM_M041">
+    </param>
+
+// -------------------------------------------------------
+//  V - Sortierung 
+// -------------------------------------------------------
+    <param name="sem_m052" type="list" default="0" label="SEM_M052" description="">
+      <option value="0">SEM_M053</option>
+      <option value="1">SEM_M054</option>
+      <option value="2">SEM_M055</option>
+      <option value="3">SEM_M057</option>
+      <option value="4">SEM_M058</option>
+      <option value="5">SEM_M059</option>
+      <option value="6">SEM_M060</option>
+      <option value="7">SEM_M061</option>
+    </param>
+
+// -------------------------------------------------------
+//  V - Richtung 
+// -------------------------------------------------------
+    <param name="sem_m063" type="list" default="0" label="SEM_M063" description="">
+      <option value="0">SEM_M064</option>
+      <option value="1">SEM_M065</option>
+    </param>
+
+// -------------------------------------------------------
+//  V - Anzahl der Veranstaltungen 
+// -------------------------------------------------------
+    <param name="sem_m066" type="list" default="5" label="SEM_M066" description="">
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </param>  
+
+// -------------------------------------------------------
+//  V - zufaellige Auswahl 
+// -------------------------------------------------------
+    <param name="sem_m081" type="radio" default="0" label="SEM_M081" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  V - Verlinkter Titel 
+// -------------------------------------------------------
+    <param name="sem_m078" type="radio" default="1" label="SEM_M078" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  Veranstaltungen und Kalender 
+// -------------------------------------------------------
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="mod_sem_space3" label="SEM_M045">
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Auswahl 
+// -------------------------------------------------------
+    <param name="sem_m046" type="list" default="0" label="SEM_M046" description="">
+      <option value="0">SEM_M047</option>
+      <option value="1">SEM_M048</option>
+      <option value="2">SEM_M049</option>
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Kategorien 
+// -------------------------------------------------------
+    <param name="sem_m050" type="text" default="" label="SEM_M050" description="SEM_M051">
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Veranstalter 
+// -------------------------------------------------------
+    <param name="sem_m082" type="text" default="" label="SEM_M082" description="SEM_M083">
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Datumsformat 
+// -------------------------------------------------------
+    <param name="sem_m043" type="text" default="%d.%m.%Y, %H:%M" label="SEM_M042" description="">
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Beginn 
+// -------------------------------------------------------
+    <param name="sem_m067" type="radio" default="1" label="SEM_M067" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Ende 
+// -------------------------------------------------------
+    <param name="sem_m068" type="radio" default="1" label="SEM_M068" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Anmeldeschluss 
+// -------------------------------------------------------
+    <param name="sem_m069" type="radio" default="1" label="SEM_M069" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Veroeffentlichung 
+// -------------------------------------------------------
+    <param name="sem_m070" type="radio" default="1" label="SEM_M070" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Ort 
+// -------------------------------------------------------
+    <param name="sem_m079" type="radio" default="1" label="SEM_M079" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Kurzbeschreibung 
+// -------------------------------------------------------
+    <param name="sem_m071" type="radio" default="1" label="SEM_M071" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Link zur Übersicht 
+// -------------------------------------------------------
+    <param name="sem_m075" type="radio" default="1" label="SEM_M075" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  Kalender 
+// -------------------------------------------------------
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="mod_sem_space4" label="SEM_M044">
+    </param>
+
+// -------------------------------------------------------
+//  K - Beginn der Woche 
+// -------------------------------------------------------
+    <param name="sem_m088" type="radio" default="1" label="SEM_M088" description="">
+      <option value="0">Sunday</option>
+      <option value="1">Monday</option>
+    </param>
+
+// -------------------------------------------------------
+//  K - CSS Kalender 
+// -------------------------------------------------------
+    <param name="sem_m084" type="text" default="border-spacing:0px;border-collapse:collapse;" label="SEM_M084" description="">
+    </param>
+
+// -------------------------------------------------------
+//  K - CSS Monat 
+// -------------------------------------------------------
+    <param name="sem_m089" type="text" default="background-color:#000000;color:#FFFFFF;text-align:center;font-weight:bold;padding:2px;" label="SEM_M089" description="">
+    </param>
+
+// -------------------------------------------------------
+//  K - CSS Link 
+// -------------------------------------------------------
+    <param name="sem_m091" type="text" default="color:#FFFFFF;font-weight:bold;text-decoration:none;" label="SEM_M091" description="">
+    </param>
+
+// -------------------------------------------------------
+//  K - CSS Wochentage 
+// -------------------------------------------------------
+    <param name="sem_m090" type="text" default="font-weight:bold;text-align:center;padding:2px;background-color:#D9D9D9;width:20px;" label="SEM_M090" description="">
+    </param>
+
+// -------------------------------------------------------
+//  K - CSS leerer Tag 
+// -------------------------------------------------------
+    <param name="sem_m085" type="text" default="border:1px solid #D9D9D9;text-align:center;font-size:8pt;vertical-align:top;height:30px;" label="SEM_M085" description="">
+    </param>
+
+// -------------------------------------------------------
+//  K - CSS Tag mit Veranstaltung 
+// -------------------------------------------------------
+    <param name="sem_m086" type="text" default="border:1px solid #D9D9D9;text-align:center;font-size:8pt;vertical-align:top;height:30px;" label="SEM_M086" description="">
+    </param>
+
+// -------------------------------------------------------
+//  K - CSS heute 
+// -------------------------------------------------------
+    <param name="sem_m087" type="text" default="background-color:#E9E9E9;font-weight: bold;" label="SEM_M087" description="">
+    </param>
+    <param name="@spacerr" type="spacer" default="" label="" description="" />
+
+  </params>  
+  <params group="advanced">
+
+// -------------------------------------------------------
+//  Anzeigeeffekt nutzen 
+// -------------------------------------------------------
+    <param name="sem_m074" type="radio" default="0" label="SEM_M074" description="SEM_M073">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  Hoehe Effektbereich 
+// -------------------------------------------------------
+    <param name="sem_m023" type="text" default="150" label="SEM_M023" description="SEM_M022">
+    </param>
+
+// -------------------------------------------------------
+//  Art des Effekts 
+// -------------------------------------------------------
+    <param name="sem_m017" type="list" default="scroll" label="SEM_M017" description="SEM_M016">
+      <option value="scroll">SEM_M024</option>
+      <option value="alternate">SEM_M013</option>
+    </param>
+
+// -------------------------------------------------------
+//  Richtung 
+// -------------------------------------------------------
+    <param name="sem_m021" type="list" default="up" label="SEM_M021" description="SEM_M020">
+      <option value="up">SEM_M072</option>
+      <option value="down">SEM_M011</option>
+      <option value="left">SEM_M012</option>
+      <option value="right">SEM_M027</option>
+    </param>  
+
+// -------------------------------------------------------
+//  Schubweite 
+// -------------------------------------------------------
+    <param name="sem_m015" type="text" default="1" label="SEM_M015" description="SEM_M014">
+    </param>
+
+// -------------------------------------------------------
+//  Verzoegerung 
+// -------------------------------------------------------
+    <param name="sem_m019" type="text" default="50" label="SEM_M019" description="SEM_M018">
+    </param>
+  </params>
+</install>
+

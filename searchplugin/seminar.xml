@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5.0" type="plugin" group="search">
+
+  <name>Search - Seminar</name>
+  <creationDate>2010-06-09</creationDate>
+  <author>Dirk Vollmar</author>
+  <copyright>(C) 2010 Dirk Vollmar.</copyright>
+  <license>http://www.gnu.org/licenses/gpl.html</license>
+  <authorEmail>seminar@vollmar.ws</authorEmail>
+  <authorUrl>http://seminar.vollmar.ws</authorUrl>
+  <version>1.0.0</version>
+  <description>Seminar - Search Plugin</description>
+  <files>
+    <filename plugin="seminar">seminar.php</filename>
+  </files>
+  <params>
+    <param name="search_limit" type="text" size="5" default="50" label="Search Limit" description="Number of search items to return"/>
+    <param name="search_name" type="text" size="10" default="Seminar" label="Search Name" description="Name of the search section"/>
+  </params>
+</install>
