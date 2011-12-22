@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <install method="upgrade" type="module" version="1.5.0">
   <name>Seminar Modul</name>
-  <creationDate>2009-10-13</creationDate>
+  <creationDate>2011-07-01</creationDate>
   <author>Dirk Vollmar</author>
-  <copyright>(C) 2009 Dirk Vollmar.</copyright>
+  <copyright>(C) 2011 Dirk Vollmar.</copyright>
   <license>http://www.gnu.org/licenses/gpl.html</license>
   <authorEmail>seminar@vollmar.ws</authorEmail>
   <authorUrl>http://seminar.vollmar.ws</authorUrl>
-  <version>1.2.2</version>
+  <version>1.3.91</version>
   <description>Seminar - Modul</description>
   <files>
     <filename module="mod_seminar">mod_seminar.php</filename>
     <filename module="mod_seminar">index.html</filename>
-    <filename module="mod_seminar">images/2608.png</filename>
+    <filename module="mod_seminar">images/2500.png</filename>
+    <filename module="mod_seminar">images/2501.png</filename>
+    <filename module="mod_seminar">images/2502.png</filename>
+    <filename module="mod_seminar">images/2606.png</filename>
+    <filename module="mod_seminar">images/2607.png</filename>
     <filename module="mod_seminar">images/2609.png</filename>
   </files>
   <languages>
@@ -31,7 +35,7 @@
 //  Art der Anzeige 
 // -------------------------------------------------------
     <param name="@spacer" type="spacer" default="" label="" description="" />
-    <param name="sem_m039" type="radio" default="0" label="SEM_M039" description="SEM_M038">
+    <param name="sem_m039" type="list" default="0" label="SEM_M039" description="SEM_M038">
       <option value="0">SEM_M040</option>
       <option value="1">SEM_M041</option>
       <option value="2">SEM_M044</option>
@@ -183,6 +187,22 @@
     </param>
 
 // -------------------------------------------------------
+//  V - Zeige Veranstaltungsgrafik 
+// -------------------------------------------------------
+    <param name="sem_m097" type="radio" default="0" label="SEM_M097" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
+//  V - Zeige Statusgrafiken 
+// -------------------------------------------------------
+    <param name="sem_m100" type="radio" default="0" label="SEM_M100" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
 //  Veranstaltungen und Kalender 
 // -------------------------------------------------------
     <param name="@spacer" type="spacer" default="" label="" description="" />
@@ -196,6 +216,16 @@
       <option value="0">SEM_M047</option>
       <option value="1">SEM_M048</option>
       <option value="2">SEM_M049</option>
+    </param>
+
+// -------------------------------------------------------
+//  VuK - Art 
+// -------------------------------------------------------
+    <param name="sem_m093" type="list" default="0" label="SEM_M093" description="">
+      <option value="0">SEM_M049</option>
+      <option value="1">SEM_M095</option>
+      <option value="2">SEM_M096</option>
+      <option value="3">SEM_M094</option>
     </param>
 
 // -------------------------------------------------------
@@ -249,6 +279,14 @@
     </param>
 
 // -------------------------------------------------------
+//  VuK - Kategorie 
+// -------------------------------------------------------
+    <param name="sem_m098" type="radio" default="1" label="SEM_M098" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+// -------------------------------------------------------
 //  VuK - Ort 
 // -------------------------------------------------------
     <param name="sem_m079" type="radio" default="1" label="SEM_M079" description="">
@@ -285,6 +323,20 @@
     <param name="sem_m088" type="radio" default="1" label="SEM_M088" description="">
       <option value="0">Sunday</option>
       <option value="1">Monday</option>
+    </param>
+
+// -------------------------------------------------------
+//  K - CSS Monat 
+// -------------------------------------------------------
+    <param name="sem_m101" type="text" default="2" label="SEM_M101" description="">
+    </param>
+
+// -------------------------------------------------------
+//  K - Benutze AJAX-Fenster 
+// -------------------------------------------------------
+    <param name="sem_m092" type="radio" default="1" label="SEM_M092" description="">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
     </param>
 
 // -------------------------------------------------------

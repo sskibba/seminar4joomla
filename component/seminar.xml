@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <install method="upgrade" type="component" version="1.5.0">
   <name>Seminar</name>
-  <creationDate>2009-10-31</creationDate>
+  <creationDate>2011-06-25</creationDate>
   <author>Dirk Vollmar</author>
-  <copyright>(C) 2004 - 2009 Dirk Vollmar.</copyright>
+  <copyright>(C) 2004 - 2011 Dirk Vollmar.</copyright>
   <license>http://www.gnu.org/licenses/gpl.html</license>
   <authorEmail>seminar@vollmar.ws</authorEmail>
   <authorUrl>http://seminar.vollmar.ws</authorUrl>
-  <version>1.3.0</version>
+  <version>1.3.91</version>
   <files>
     <filename>index.html</filename>
     <filename>seminar.php</filename>
     <filename>seminar.html.php</filename>
     <filename>seminar.class.php</filename>
     <filename>seminar.code.php</filename>
-    <filename>seminar.gmap.php</filename>
     <filename>css/index.html</filename>
     <filename>css/seminar.0.css</filename>
     <filename>css/seminar.1.css</filename>
@@ -30,6 +29,8 @@
     <filename>images/0008.png</filename>
     <filename>images/0009.png</filename>
     <filename>images/0012.png</filename>
+    <filename>images/0013.png</filename>
+    <filename>images/0014.png</filename>
     <filename>images/0016.png</filename>
     <filename>images/0032.png</filename>
     <filename>images/1016.png</filename>
@@ -38,6 +39,7 @@
     <filename>images/1132.png</filename>
     <filename>images/1216.png</filename>
     <filename>images/1232.png</filename>
+    <filename>images/1312.png</filename>
     <filename>images/1316.png</filename>
     <filename>images/1332.png</filename>
     <filename>images/1416.png</filename>
@@ -80,15 +82,10 @@
     <filename>images/2502.png</filename>
     <filename>images/2600.png</filename>
     <filename>images/2601.png</filename>
-    <filename>images/2602.png</filename>
-    <filename>images/2603.png</filename>
-    <filename>images/2604.png</filename>
     <filename>images/2606.png</filename>
     <filename>images/2607.png</filename>
     <filename>images/2700.png</filename>
-    <filename>images/2701.png</filename>
     <filename>images/2800.png</filename>
-    <filename>images/2801.png</filename>
     <filename>images/2900.png</filename>
     <filename>images/3000.png</filename>
     <filename>images/3001.png</filename>
@@ -98,6 +95,8 @@
     <filename>images/3232.png</filename>
     <filename>images/3316.png</filename>
     <filename>images/3332.png</filename>
+    <filename>images/3416.png</filename>
+    <filename>images/3432.png</filename>
     <filename>images/certificate.png</filename>
     <filename>images/donate.png</filename>
     <filename>images/logo.png</filename>
@@ -106,6 +105,20 @@
     <filename>images/menulogo.png</filename>
     <filename>images/pin.png</filename>
     <filename>images/shadow.png</filename>
+    <filename>captcha/index.html</filename>
+    <filename>captcha/captcha.ttf</filename>
+    <filename>captcha/captcha.php</filename>
+    <filename>captcha/overlay.png</filename>
+    <filename>captcha/captcha1.png</filename>
+    <filename>captcha/captcha2.png</filename>
+    <filename>captcha/captcha3.png</filename>
+    <filename>captcha/captcha4.png</filename>
+    <filename>captcha/captcha5.png</filename>
+    <filename>captcha/captcha6.png</filename>
+    <filename>captcha/captcha7.png</filename>
+    <filename>captcha/captcha8.png</filename>
+    <filename>captcha/captcha9.png</filename>
+    <filename>captcha/captcha10.png</filename>
   </files>
   <install>
     <queries>
@@ -122,11 +135,14 @@
       `teacher` varchar(120) NOT NULL default '',
       `fees` varchar(10) NOT NULL default '0',
       `maxpupil` int(5) NOT NULL default '0',
+      `prebooked` int(5) NOT NULL default '0',
       `bookedpupil` int(5) NOT NULL default '0',
       `stopbooking` tinyint(1) NOT NULL default '0',
       `cancelled` tinyint(1) NOT NULL default '0',
       `begin` datetime NOT NULL default '0000-00-00 00:00:00',
       `end` datetime NOT NULL default '0000-00-00 00:00:00',
+      `pubbegin` datetime NOT NULL default '0000-00-00 00:00:00',
+      `pubend` datetime NOT NULL default '0000-00-00 00:00:00',
       `booked` datetime NOT NULL default '0000-00-00 00:00:00',
       `showbegin` tinyint(1) NOT NULL default '1',
       `showend` tinyint(1) NOT NULL default '1',
@@ -206,6 +222,26 @@
       `zusatz18show` tinyint(1) NOT NULL default '0',
       `zusatz19show` tinyint(1) NOT NULL default '0',
       `zusatz20show` tinyint(1) NOT NULL default '0',
+      `zusatz1nl` tinyint(1) NOT NULL default '1',
+      `zusatz2nl` tinyint(1) NOT NULL default '1',
+      `zusatz3nl` tinyint(1) NOT NULL default '1',
+      `zusatz4nl` tinyint(1) NOT NULL default '1',
+      `zusatz5nl` tinyint(1) NOT NULL default '1',
+      `zusatz6nl` tinyint(1) NOT NULL default '1',
+      `zusatz7nl` tinyint(1) NOT NULL default '1',
+      `zusatz8nl` tinyint(1) NOT NULL default '1',
+      `zusatz9nl` tinyint(1) NOT NULL default '1',
+      `zusatz10nl` tinyint(1) NOT NULL default '1',
+      `zusatz11nl` tinyint(1) NOT NULL default '1',
+      `zusatz12nl` tinyint(1) NOT NULL default '1',
+      `zusatz13nl` tinyint(1) NOT NULL default '1',
+      `zusatz14nl` tinyint(1) NOT NULL default '1',
+      `zusatz15nl` tinyint(1) NOT NULL default '1',
+      `zusatz16nl` tinyint(1) NOT NULL default '1',
+      `zusatz17nl` tinyint(1) NOT NULL default '1',
+      `zusatz18nl` tinyint(1) NOT NULL default '1',
+      `zusatz19nl` tinyint(1) NOT NULL default '1',
+      `zusatz20nl` tinyint(1) NOT NULL default '1',
       `image` varchar(120) NOT NULL default '',
       `file1` varchar(100) NOT NULL default '',
       `file2` varchar(100) NOT NULL default '',
@@ -227,11 +263,93 @@
       `file3code` mediumtext NOT NULL default '',
       `file4code` mediumtext NOT NULL default '',
       `file5code` mediumtext NOT NULL default '',
+      `request1` text NOT NULL default '',
+      `request2` text NOT NULL default '',
+      `request3` text NOT NULL default '',
+      `request4` text NOT NULL default '',
+      `request5` text NOT NULL default '',
+      `request6` text NOT NULL default '',
+      `request7` text NOT NULL default '',
+      `request8` text NOT NULL default '',
+      `request9` text NOT NULL default '',
+      `request10` text NOT NULL default '',
+      `request11` text NOT NULL default '',
+      `request12` text NOT NULL default '',
+      `request13` text NOT NULL default '',
+      `request14` text NOT NULL default '',
+      `request15` text NOT NULL default '',
+      `request16` text NOT NULL default '',
+      `request17` text NOT NULL default '',
+      `request18` text NOT NULL default '',
+      `request19` text NOT NULL default '',
+      `request20` text NOT NULL default '',
+      `request1hint` text NOT NULL default '',
+      `request2hint` text NOT NULL default '',
+      `request3hint` text NOT NULL default '',
+      `request4hint` text NOT NULL default '',
+      `request5hint` text NOT NULL default '',
+      `request6hint` text NOT NULL default '',
+      `request7hint` text NOT NULL default '',
+      `request8hint` text NOT NULL default '',
+      `request9hint` text NOT NULL default '',
+      `request10hint` text NOT NULL default '',
+      `request11hint` text NOT NULL default '',
+      `request12hint` text NOT NULL default '',
+      `request13hint` text NOT NULL default '',
+      `request14hint` text NOT NULL default '',
+      `request15hint` text NOT NULL default '',
+      `request16hint` text NOT NULL default '',
+      `request17hint` text NOT NULL default '',
+      `request18hint` text NOT NULL default '',
+      `request19hint` text NOT NULL default '',
+      `request20hint` text NOT NULL default '',
+      `request1show` tinyint(1) NOT NULL default '0',
+      `request2show` tinyint(1) NOT NULL default '0',
+      `request3show` tinyint(1) NOT NULL default '0',
+      `request4show` tinyint(1) NOT NULL default '0',
+      `request5show` tinyint(1) NOT NULL default '0',
+      `request6show` tinyint(1) NOT NULL default '0',
+      `request7show` tinyint(1) NOT NULL default '0',
+      `request8show` tinyint(1) NOT NULL default '0',
+      `request9show` tinyint(1) NOT NULL default '0',
+      `request10show` tinyint(1) NOT NULL default '0',
+      `request11show` tinyint(1) NOT NULL default '0',
+      `request12show` tinyint(1) NOT NULL default '0',
+      `request13show` tinyint(1) NOT NULL default '0',
+      `request14show` tinyint(1) NOT NULL default '0',
+      `request15show` tinyint(1) NOT NULL default '0',
+      `request16show` tinyint(1) NOT NULL default '0',
+      `request17show` tinyint(1) NOT NULL default '0',
+      `request18show` tinyint(1) NOT NULL default '0',
+      `request19show` tinyint(1) NOT NULL default '0',
+      `request20show` tinyint(1) NOT NULL default '0',
+      `request1nl` tinyint(1) NOT NULL default '1',
+      `request2nl` tinyint(1) NOT NULL default '1',
+      `request3nl` tinyint(1) NOT NULL default '1',
+      `request4nl` tinyint(1) NOT NULL default '1',
+      `request5nl` tinyint(1) NOT NULL default '1',
+      `request6nl` tinyint(1) NOT NULL default '1',
+      `request7nl` tinyint(1) NOT NULL default '1',
+      `request8nl` tinyint(1) NOT NULL default '1',
+      `request9nl` tinyint(1) NOT NULL default '1',
+      `request10nl` tinyint(1) NOT NULL default '1',
+      `request11nl` tinyint(1) NOT NULL default '1',
+      `request12nl` tinyint(1) NOT NULL default '1',
+      `request13nl` tinyint(1) NOT NULL default '1',
+      `request14nl` tinyint(1) NOT NULL default '1',
+      `request15nl` tinyint(1) NOT NULL default '1',
+      `request16nl` tinyint(1) NOT NULL default '1',
+      `request17nl` tinyint(1) NOT NULL default '1',
+      `request18nl` tinyint(1) NOT NULL default '1',
+      `request19nl` tinyint(1) NOT NULL default '1',
+      `request20nl` tinyint(1) NOT NULL default '1',
+      `payctrl` int(10) unsigned NOT NULL default '1',
       PRIMARY KEY (`id`)
       ) COMMENT='Seminar Events';
       </query>
       <query>CREATE TABLE IF NOT EXISTS `#__sembookings` (
       `id` int(12) NOT NULL auto_increment,
+      `uniqid` text NOT NULL default '',
       `name` text NOT NULL default '',
       `email` text NOT NULL default '',
       `sid` int(11) NOT NULL default '0',
@@ -243,6 +361,7 @@
       `grade` tinyint(1) NOT NULL default '0',
       `comment` varchar(200) NOT NULL default '',
       `paid` tinyint(1) NOT NULL default '0',
+      `paiddate` datetime NOT NULL default '0000-00-00 00:00:00',
       `nrbooked` int(11) NOT NULL default '1',
       `zusatz1` text NOT NULL default '',
       `zusatz2` text NOT NULL default '',
@@ -274,6 +393,92 @@
       PRIMARY KEY (`id`)
       ) COMMENT='Seminar Event Numbers';
       </query>
+      <query>CREATE TABLE IF NOT EXISTS `#__semattendees` (
+      `id` int(12) NOT NULL auto_increment,
+      `sembid` int(10) NOT NULL default '0',
+      `semid` int(10) NOT NULL default '0',
+      `ordering` tinyint(5) NOT NULL default '0',
+      `fees` double NOT NULL default '0',
+      `publishdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+      `request1` text NOT NULL default '',
+      `request2` text NOT NULL default '',
+      `request3` text NOT NULL default '',
+      `request4` text NOT NULL default '',
+      `request5` text NOT NULL default '',
+      `request6` text NOT NULL default '',
+      `request7` text NOT NULL default '',
+      `request8` text NOT NULL default '',
+      `request9` text NOT NULL default '',
+      `request10` text NOT NULL default '',
+      `request11` text NOT NULL default '',
+      `request12` text NOT NULL default '',
+      `request13` text NOT NULL default '',
+      `request14` text NOT NULL default '',
+      `request15` text NOT NULL default '',
+      `request16` text NOT NULL default '',
+      `request17` text NOT NULL default '',
+      `request18` text NOT NULL default '',
+      `request19` text NOT NULL default '',
+      `request20` text NOT NULL default '',
+      PRIMARY KEY (`id`)
+      ) COMMENT='Seminar Attendees';
+      </query>
+      <query>CREATE TABLE IF NOT EXISTS `#__semlayouts` (
+      `id` int(12) NOT NULL auto_increment,
+      `chosen` tinyint(1) NOT NULL default '0',
+      `title` varchar(128) NOT NULL default '',
+      `overview_event_header` mediumtext NOT NULL default '',
+      `overview_nr_of_events` int(3) NOT NULL default '1',
+      `overview_event` mediumtext NOT NULL default '',
+      `overview_event_footer` mediumtext NOT NULL default '',
+      `overview_booking_header` mediumtext NOT NULL default '',
+      `overview_nr_of_bookings` int(3) NOT NULL default '1',
+      `overview_booking` mediumtext NOT NULL default '',
+      `overview_booking_footer` mediumtext NOT NULL default '',
+      `overview_offer_header` mediumtext NOT NULL default '',
+      `overview_nr_of_offers` int(3) NOT NULL default '1',
+      `overview_offer` mediumtext NOT NULL default '',
+      `overview_offer_footer` mediumtext NOT NULL default '',
+      `event` mediumtext NOT NULL default '',
+      `booking` mediumtext NOT NULL default '',
+      `booked` mediumtext NOT NULL default '',
+      `certificate` mediumtext NOT NULL default '',
+      PRIMARY KEY (`id`)
+      ) COMMENT='Seminar Layouts';
+      </query>
+      <query>CREATE TABLE IF NOT EXISTS `#__sememails` (
+      `id` int(12) NOT NULL auto_increment,
+      `chosen` tinyint(1) NOT NULL default '0',
+      `title` varchar(128) NOT NULL default '',
+      `new` mediumtext NOT NULL default '',
+      `new_type` tinyint(1) NOT NULL default '0',
+      `changed` mediumtext NOT NULL default '',
+      `changed_type` tinyint(1) NOT NULL default '0',
+      `unpublished_recent` mediumtext NOT NULL default '',
+      `unpublished_recent_type` tinyint(1) NOT NULL default '0',
+      `unpublished_over` mediumtext NOT NULL default '',
+      `unpublished_over_type` tinyint(1) NOT NULL default '0',
+      `republished_recent` mediumtext NOT NULL default '',
+      `republished_recent_type` tinyint(1) NOT NULL default '0',
+      `republished_over` mediumtext NOT NULL default '',
+      `republished_over_type` tinyint(1) NOT NULL default '0',
+      `booked` mediumtext NOT NULL default '',
+      `booked_type` tinyint(1) NOT NULL default '0',
+      `bookingchanged` mediumtext NOT NULL default '',
+      `bookingchanged_type` tinyint(1) NOT NULL default '0',
+      `canceled` mediumtext NOT NULL default '',
+      `canceled_type` tinyint(1) NOT NULL default '0',
+      `paid` mediumtext NOT NULL default '',
+      `paid_type` tinyint(1) NOT NULL default '0',
+      `unpaid` mediumtext NOT NULL default '',
+      `unpaid_type` tinyint(1) NOT NULL default '0',
+      `certificated` mediumtext NOT NULL default '',
+      `certificated_type` tinyint(1) NOT NULL default '0',
+      `uncertificated` mediumtext NOT NULL default '',
+      `uncertificated_type` tinyint(1) NOT NULL default '0',
+      PRIMARY KEY (`id`)
+      ) COMMENT='Seminar Emails';
+      </query>
    </queries>
   </install>
   <uninstall>
@@ -281,6 +486,9 @@
       <query>DROP TABLE IF EXISTS `#__seminar`</query>
       <query>DROP TABLE IF EXISTS `#__sembookings`</query>
       <query>DROP TABLE IF EXISTS `#__semnumber`</query>
+      <query>DROP TABLE IF EXISTS `#__semattendees`</query>
+      <query>DROP TABLE IF EXISTS `#__semlayouts`</query>
+      <query>DROP TABLE IF EXISTS `#__sememails`</query>
       <query>DELETE FROM `#__categories` WHERE `section` LIKE 'com_seminar'</query>
     </queries>
   </uninstall>
@@ -291,6 +499,7 @@
   <administration>
     <menu img="components/com_seminar/images/icon-16-sem_logo.png">Seminar</menu>
     <submenu>
+      <menu task="6" img="components/com_seminar/images/icon-16-sem_cpanel.png">CONTROL</menu>
       <menu task="2" img="components/com_seminar/images/icon-16-sem_event.png">EVENTS</menu>
       <menu task="1" img="components/com_seminar/images/icon-16-sem_pattern.png">TEMPLATES</menu>
       <menu link="option=com_categories&amp;section=com_seminar" img="components/com_seminar/images/icon-16-sem_category.png">CATEGORIES</menu>
@@ -310,6 +519,7 @@
       <filename>joomfish/index.html</filename>
       <filename>joomfish/jf_seminar.xml</filename>
       <filename>images/index.html</filename>
+      <filename>images/icon-48-sem_category.png</filename>
       <filename>images/icon-48-sem_config.png</filename>
       <filename>images/icon-48-sem_event.png</filename>
       <filename>images/icon-48-sem_info.png</filename>
@@ -317,6 +527,7 @@
       <filename>images/icon-48-sem_pattern.png</filename>
       <filename>images/icon-48-sem_payctrl.png</filename>
       <filename>images/icon-48-sem_statistic.png</filename>
+      <filename>images/icon-16-sem_cpanel.png</filename>
       <filename>images/icon-16-sem_category.png</filename>
       <filename>images/icon-16-sem_config.png</filename>
       <filename>images/icon-16-sem_event.png</filename>

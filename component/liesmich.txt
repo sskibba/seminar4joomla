@@ -1,4 +1,4 @@
-Seminar für Joomla! ist ein leistungsfähiges Buchungssystem für Veranstaltungen aller Art. Egal, ob Sie Fortbildungen anbieten, Ihr Verein Ausflüge veranstaltet oder Sie zu einer Party einladen möchten: Mit Seminar für joomla! ist die Verwaltung der Veranstaltungen kein Problem.
+Seminar für Joomla! ist ein leistungsfähiges Buchungssystem für Veranstaltungen aller Art. Egal, ob Sie Fortbildungen anbieten, Ihr Verein Ausflüge veranstaltet oder Sie zu einer Party einladen möchten: Mit Seminar für Joomla! ist die Verwaltung der Veranstaltungen kein Problem.
 
 In das Buchungssystem wurde auch ein Bewertungs- und ein Zertifikationssystem integriert, die bei Bedarf über Parameter an- und abgestellt werden können. Auch das automatische Verschicken von Benachrichtigungs-E-Mails ist möglich.
 
@@ -57,7 +57,7 @@ Für jeden Bereich (Veranstaltungen, Meine Buchungen, Meine Angebote) können in
 
 In der Detailansicht kann eine Kalender-Datei im ICAL-Format heruntergeladen werden. Damit kann der Benutzer die Veranstaltungen in seinen Kalender (z.B. Outlook) eintragen lassen (Einstellung in den Parametern).
 
-Das Anmelden und Abmelden an die joomla!-Webseite kann nun direkt in Seminar erfolgen (Einstellung in den Parametern).
+Das Anmelden und Abmelden an die Joomla!-Webseite kann nun direkt in Seminar erfolgen (Einstellung in den Parametern).
 
 Es ist möglich, Vorlagen für Veranstaltungen anzulegen und zu verwalten.
 
@@ -222,7 +222,7 @@ Seminar übernahm immer die Formatierung der Startseite mit den entsprechenden M
 
 Neu in Version 1.25
 
-Einbindung der Google-Maps-API in Seminar für joomla!. Damit kann man sich nun den Veranstaltungsort bzw. die Route zum Veranstaltungsort in Google-Maps anzeigen lassen.
+Einbindung der Google-Maps-API in Seminar für Joomla!. Damit kann man sich nun den Veranstaltungsort bzw. die Route zum Veranstaltungsort in Google-Maps anzeigen lassen.
 
 Umprogrammierung der Installationsroutine, um nicht nur eine Neuinstallation, sondern auch ein Upgrade durchführen zu können.
 
@@ -245,8 +245,8 @@ Das falsche Format in der Datumsausgabe der E-Mails wurde korrigiert, ebenso in 
 
 Neu in Version 1.23
 
-Seminar läuft nun auch, wenn die suchmaschinenfreundlichen URLs (SEF bzw. SEO) in joomla! aktiviert sind.
+Seminar läuft nun auch, wenn die suchmaschinenfreundlichen URLs (SEF bzw. SEO) in Joomla! aktiviert sind.
 
-Die Referenzierung auf die Barcode-Grafiken funktioniert nun richtig, auch wenn joomla! nicht im Root installiert wurde.
+Die Referenzierung auf die Barcode-Grafiken funktioniert nun richtig, auch wenn Joomla! nicht im Root installiert wurde.
 
 Bei einigen Templates kam es zu Problemen mit der Seitennavigation. Daher habe ich eine eigene Seitennavigation programmiert, die das Problem behebt.  

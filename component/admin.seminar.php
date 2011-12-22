@@ -2,11 +2,11 @@
 
 //*******************************************
 //***         Seminar for joomla!         ***
-//***            Version 1.3.0            ***
+//***            Version 1.4.0            ***
 //*******************************************
 //***     Copyright (c) Dirk Vollmar      ***
-//***             2004 / 2009             ***
-//***          joomla@vollmar.ws          ***
+//***                 2011                ***
+//***         seminar@vollmar.ws          ***
 //***         All rights reserved         ***
 //*******************************************
 //*     Released under GNU/GPL License      *
@@ -18,7 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 require_once(JApplicationHelper::getPath('admin_html'));
 require_once(JApplicationHelper::getPath('class'));
 $document = &JFactory::getDocument();
-$document->addCustomTag("<link rel=\"stylesheet\" href=\"components/".JRequest::getCmd('option')."/css/icon.css\" type=\"text/css\" />");
+$document->addStyleSheet("components/".JRequest::getCmd('option')."/css/icon.css");
 $mainframe = JFactory::getApplication();
 $task = trim(JRequest::getVar('task','show'));
 $cid = JRequest::getVar('cid', array(0));
@@ -184,13 +184,67 @@ switch ($task) {
     sem_g034();
     break;
 
+  case "5":
+// Zahlungsarten anzeigen
+    sem_g035();
+    break;
+
+  case "37":
+// Zahlungsart publishen
+    sem_g037($cid,1);
+    break;
+
+  case "38":
+// Zahlungsart publishen
+    sem_g037($cid,0);
+    break;
+
+  case "39":
+// Neue zahlungsart erstellen
+    sem_g036(0);
+    break;
+
+  case "40":
+// Zahlungsart bearbeiten
+    sem_g036($cid[0]);
+    break;
+
+  case "41":
+// Zahlungsart loeschen
+    sem_g038($cid,3);
+    break;
+
+  case "42":
+// Zahlungsart speichern
+    sem_g039();
+    break;
+
+  case "6":
+// Kontrollzentrum anzeigen
+    sem_g001();
+    break;
+
   default:
-// Veranstaltungsuebersicht anzeigen
-    sem_g027();
+// Kontrollzentrum anzeigen
+    sem_g001();
     break;
 }
 
-echo sem_f062()."\n<br />".sem_f028();
+echo sem_f028();
+
+// ++++++++++++++++++++++++++++++++++
+// +++ Kontrollzentrum            +++
+// ++++++++++++++++++++++++++++++++++
+
+function sem_g001() {
+  TOOLBAR_seminar::_HOME();
+  $database = &JFactory::getDBO();
+  $where[] = "pattern = ''";
+  $where[] = "published = 1";
+  $database->setQuery("SELECT * FROM #__seminar WHERE pattern = '' AND published = 1 AND end > '".sem_f046()."' ORDER BY begin LIMIT 5");
+  $rows = $database->loadObjectList();
+  HTML_seminar::sem_g001($rows);
+}
 
 // ++++++++++++++++++++++++++++++++++
 // +++ Kurse editieren            +++
@@ -212,8 +266,9 @@ function sem_g006($uid,$art) {
   }
   $database = &JFactory::getDBO();
   $my = &JFactory::getuser();
-
+  $neudatum = sem_f046();
   $vorlage = JRequest::getInt('vorlage',0);
+  $semnum = JRequest::getVar('semnum','');
   if($vorlage>0) {
     $uid = $vorlage;
   }
@@ -229,6 +284,8 @@ function sem_g006($uid,$art) {
   if($vorlage>0) {
     $row->id = "";
     $row->pattern = "";
+    $row->publisher = $my->id;
+    $row->semnum = $semnum;
   }
   $row->vorlage = $vorlage;
 
@@ -236,6 +293,8 @@ function sem_g006($uid,$art) {
   if ($uid==0) {
     $row->begin = date( "Y-m-d" )." 14:00:00";
     $row->end = date( "Y-m-d" )." 17:00:00";
+    $row->pubbegin = $neudatum;
+    $row->pubend = $row->end;
     $row->booked = date( "Y-m-d" )." 12:00:00";
     $row->publisher = $my->id;
     $row->semnum = sem_f064(date('Y'));
@@ -245,11 +304,25 @@ function sem_g006($uid,$art) {
   $zeit = explode(":",$zeit[1]);
   $row->begin_hour = $zeit[0];
   $row->begin_minute = $zeit[1];
+
   $zeit = explode(" ",$row->end);
   $row->end_date = $zeit[0];
   $zeit = explode(":",$zeit[1]);
   $row->end_hour = $zeit[0];
   $row->end_minute = $zeit[1];
+
+  $zeit = explode(" ",$row->pubbegin);
+  $row->pubbegin_date = $zeit[0];
+  $zeit = explode(":",$zeit[1]);
+  $row->pubbegin_hour = $zeit[0];
+  $row->pubbegin_minute = $zeit[1];
+
+  $zeit = explode(" ",$row->pubend);
+  $row->pubend_date = $zeit[0];
+  $zeit = explode(":",$zeit[1]);
+  $row->pubend_hour = $zeit[0];
+  $row->pubend_minute = $zeit[1];
+
   $zeit = explode(" ",$row->booked);
   $row->booked_date = $zeit[0];
   $zeit = explode(":",$zeit[1]);
@@ -264,298 +337,57 @@ function sem_g006($uid,$art) {
 // ++++++++++++++++++++++++++++++++++
 
 function sem_g007($art) {
-  $database = &JFactory::getDBO();
-  $config = &JComponentHelper::getParams('com_seminar');
-  $caid = JRequest::getInt('caid',0);
-  $cancel = JRequest::getInt('cancel',0);
-  $inform = JRequest::getInt('inform',0);
-  $infotext = sem_f018(JRequest::getVar('infotext',''));
-  $deldatei1 = JRequest::getVar('deldatei1',0);
-  $deldatei2 = JRequest::getVar('deldatei2',0);
-  $deldatei3 = JRequest::getVar('deldatei3',0);
-  $deldatei4 = JRequest::getVar('deldatei4',0);
-  $deldatei5 = JRequest::getVar('deldatei5',0);
-  $vorlage = JRequest::getInt('vorlage',0);
   $id = JRequest::getInt('id',0);
-  $neudatum = sem_f046();
 
-// Zeit formatieren
-  $_begin_date = JRequest::getVar('_begin_date','0000-00-00');
-  $_begin_hour= JRequest::getVar('_begin_hour','00');
-  $_begin_minute = JRequest::getVar('_begin_minute','00');
-  $_end_date = JRequest::getVar('_end_date','0000-00-00');
-  $_end_hour= JRequest::getVar('_end_hour','00');
-  $_end_minute = JRequest::getVar('_end_minute','00');
-  $_booked_date = JRequest::getVar('_booked_date','0000-00-00');
-  $_booked_hour= JRequest::getVar('_booked_hour','00');
-  $_booked_minute = JRequest::getVar('_booked_minute','00');
-
+  $emailart = 1;
   if($id>0) {
-    $kurs = new mosSeminar($database);
-    $kurs->load($id);
+    $emailart = 2;
   }
-  if($vorlage>0) {
-    $kurs = new mosSeminar($database);
-    $kurs->load($vorlage);
-  }
-  $post = JRequest::get('post');
-  $post['description'] = JRequest::getVar('description', '', 'post', 'string', JREQUEST_ALLOWHTML);
-  $row = new mosSeminar($database);
-  $row->load($cid);
-  if (!$row->bind($post)) {
-    return JError::raiseError( 500, $row->getError() );
-    exit();
-  }
-// Zuweisung der aktuellen Zeit
-  if($id==0) {
-    $row->publishdate = $neudatum;
-  }
-  $row->updated = $neudatum;
-  if($cancel!=$row->cancelled) {
-    $tempmail = 9 + $cancel;
-    $database->setQuery( "SELECT * FROM #__sembookings WHERE semid='$row->id'" );
-    $rows = $database->loadObjectList();
-    for ($i=0, $n=count($rows); $i < $n; $i++) {
-      sem_f050($row->id, $rows[$i]->id, $tempmail);
-    }
-  }
-  $row->cancelled = $cancel;
-  $row->catid = $caid;
-
-// Zuweisung der Startzeit
-  if (intval( $_begin_date )) {
-      $dt = "$_begin_date $_begin_hour:$_begin_minute:00";
-  } else {
-    $dt = date( "Y-m-d 14:00:00" );
-  }
-  $row->begin = strftime( "%Y-%m-%d %H:%M:%S", strtotime( $dt ) );
-
-// Zuweisung der Endzeit
-  if (intval( $_end_date)) {
-      $dt = "$_end_date $_end_hour:$_end_minute:00";
-  } else {
-    $dt = date( "Y-m-d 17:00:00" );
-  }
-  $row->end = strftime( "%Y-%m-%d %H:%M:%S", strtotime( $dt ) );
-
-// Zuweisung der Buchungszeit
-  if (intval( $_booked_date)) {
-      $dt = "$_booked_date $_booked_hour:$_booked_minute:00";
-  } else {
-    $dt = date( "Y-m-d 12:00:00" );
-  }
-  $row->booked = strftime( "%Y-%m-%d %H:%M:%S", strtotime( $dt ) );
-
-// neue Daten eintragen
-  $row->description = str_replace('<br>','<br />',$row->description);
-  $row->description = str_replace('\"','"',$row->description);
-  $row->description = str_replace("\'","'",$row->description);
-  $row->semnum = sem_f018($row->semnum);
-  $row->title = sem_f018($row->title);
-  $row->target = sem_f018($row->target);
-  $row->shortdesc = sem_f018($row->shortdesc);
-  $row->place = sem_f018($row->place);
-  $row->fees = str_replace(",",".",sem_f018($row->fees));
-  $row->maxpupil = sem_f018($row->maxpupil);
-  $row->gmaploc = sem_f018($row->gmaploc);
-  $row->nrbooked = sem_f018($row->nrbooked);
-  $row->zusatz1 = sem_f018($row->zusatz1);
-  $row->zusatz2 = sem_f018($row->zusatz2);
-  $row->zusatz3 = sem_f018($row->zusatz3);
-  $row->zusatz4 = sem_f018($row->zusatz4);
-  $row->zusatz5 = sem_f018($row->zusatz5);
-  $row->zusatz6 = sem_f018($row->zusatz6);
-  $row->zusatz7 = sem_f018($row->zusatz7);
-  $row->zusatz8 = sem_f018($row->zusatz8);
-  $row->zusatz9 = sem_f018($row->zusatz9);
-  $row->zusatz10 = sem_f018($row->zusatz10);
-  $row->zusatz11 = sem_f018($row->zusatz11);
-  $row->zusatz12 = sem_f018($row->zusatz12);
-  $row->zusatz13 = sem_f018($row->zusatz13);
-  $row->zusatz14 = sem_f018($row->zusatz14);
-  $row->zusatz15 = sem_f018($row->zusatz15);
-  $row->zusatz16 = sem_f018($row->zusatz16);
-  $row->zusatz17 = sem_f018($row->zusatz17);
-  $row->zusatz18 = sem_f018($row->zusatz18);
-  $row->zusatz19 = sem_f018($row->zusatz19);
-  $row->zusatz20 = sem_f018($row->zusatz20);
-  $row->zusatz1hint = sem_f018($row->zusatz1hint);
-  $row->zusatz2hint = sem_f018($row->zusatz2hint);
-  $row->zusatz3hint = sem_f018($row->zusatz3hint);
-  $row->zusatz4hint = sem_f018($row->zusatz4hint);
-  $row->zusatz5hint = sem_f018($row->zusatz5hint);
-  $row->zusatz6hint = sem_f018($row->zusatz6hint);
-  $row->zusatz7hint = sem_f018($row->zusatz7hint);
-  $row->zusatz8hint = sem_f018($row->zusatz8hint);
-  $row->zusatz9hint = sem_f018($row->zusatz9hint);
-  $row->zusatz10hint = sem_f018($row->zusatz10hint);
-  $row->zusatz11hint = sem_f018($row->zusatz11hint);
-  $row->zusatz12hint = sem_f018($row->zusatz12hint);
-  $row->zusatz13hint = sem_f018($row->zusatz13hint);
-  $row->zusatz14hint = sem_f018($row->zusatz14hint);
-  $row->zusatz15hint = sem_f018($row->zusatz15hint);
-  $row->zusatz16hint = sem_f018($row->zusatz16hint);
-  $row->zusatz17hint = sem_f018($row->zusatz17hint);
-  $row->zusatz18hint = sem_f018($row->zusatz18hint);
-  $row->zusatz19hint = sem_f018($row->zusatz19hint);
-  $row->zusatz20hint = sem_f018($row->zusatz20hint);
-  $row->file1desc = sem_f018($row->file1desc);
-  $row->file2desc = sem_f018($row->file2desc);
-  $row->file3desc = sem_f018($row->file3desc);
-  $row->file4desc = sem_f018($row->file4desc);
-  $row->file5desc = sem_f018($row->file5desc);
-  if($row->id>0 OR $vorlage>0) {
-    if($deldatei1!=1) {
-      $row->file1 = $kurs->file1;
-      $row->file1code = $kurs->file1code;
-    }
-    if($deldatei2!=1) {
-      $row->file2 = $kurs->file2;
-      $row->file2code = $kurs->file2code;
-    }
-    if($deldatei3!=1) {
-      $row->file3 = $kurs->file3;
-      $row->file3code = $kurs->file3code;
-    }
-    if($deldatei4!=1) {
-      $row->file4 = $kurs->file4;
-      $row->file4code = $kurs->file4code;
-    }
-    if($deldatei5!=1) {
-      $row->file5 = $kurs->file5;
-      $row->file5code = $kurs->file5code;
-    }
-  }
-  if($row->id>0) {
-    $row->hits = $kurs->hits;
-  }
-	$fileext = explode(' ',strtolower($config->get('sem_p057','txt zip pdf')));
-  $filesize = $config->get('sem_p056',200)*1024; 
-  $fehler = array('','','','','','','','','','');
-  if(is_file($_FILES['datei1']['tmp_name']) AND $_FILES['datei1']['size']>0) {
-    if($_FILES['datei1']['size']>$filesize) {
-      $fehler[0] = str_replace("SEM_FILE",$_FILES['datei1']['name'],JTEXT::_('SEM_0141'));
-    }
-		$datei1ext = array_pop(explode( ".",strtolower($_FILES['datei1']['name'])));
-  	if(!in_array($datei1ext,$fileext)) {
-      $fehler[1] = str_replace("SEM_FILE",$_FILES['datei1']['name'],JTEXT::_('SEM_0142'));
-    }
-    if($fehler[0]=="" AND $fehler[1]=="") {
-      $row->file1 = $_FILES['datei1']['name'];
-      $row->file1code = base64_encode(file_get_contents($_FILES['datei1']['tmp_name']));
-    }
-  }
-  if(is_file($_FILES['datei2']['tmp_name']) AND $_FILES['datei2']['size']>0) {
-    if($_FILES['datei2']['size']>$filesize) {
-      $fehler[2] = str_replace("SEM_FILE",$_FILES['datei2']['name'],JTEXT::_('SEM_0141'));
-    }
-		$datei2ext = array_pop(explode( ".",strtolower($_FILES['datei2']['name'])));
-  	if(!in_array($datei2ext,$fileext)) {
-      $fehler[3] = str_replace("SEM_FILE",$_FILES['datei2']['name'],JTEXT::_('SEM_0142'));
-    }
-    if($fehler[2]=="" AND $fehler[3]=="") {
-      $row->file2 = $_FILES['datei2']['name'];
-      $row->file2code = base64_encode(file_get_contents($_FILES['datei2']['tmp_name']));
-    }
-  }
-  if(is_file($_FILES['datei3']['tmp_name']) AND $_FILES['datei3']['size']>0) {
-    if($_FILES['datei3']['size']>$filesize) {
-      $fehler[4] = str_replace("SEM_FILE",$_FILES['datei3']['name'],JTEXT::_('SEM_0141'));
-    }
-		$datei3ext = array_pop(explode( ".",strtolower($_FILES['datei3']['name'])));
-  	if(!in_array($datei3ext,$fileext)) {
-      $fehler[5] = str_replace("SEM_FILE",$_FILES['datei3']['name'],JTEXT::_('SEM_0142'));
-    }
-    if($fehler[4]=="" AND $fehler[5]=="") {
-      $row->file3 = $_FILES['datei3']['name'];
-      $row->file3code = base64_encode(file_get_contents($_FILES['datei3']['tmp_name']));
-    }
-  }
-  if(is_file($_FILES['datei4']['tmp_name']) AND $_FILES['datei4']['size']>0) {
-    if($_FILES['datei4']['size']>$filesize) {
-      $fehler[6] = str_replace("SEM_FILE",$_FILES['datei4']['name'],JTEXT::_('SEM_0141'));
-    }
-		$datei4ext = array_pop(explode( ".",strtolower($_FILES['datei4']['name'])));
-  	if(!in_array($datei4ext,$fileext)) {
-      $fehler[7] = str_replace("SEM_FILE",$_FILES['datei4']['name'],JTEXT::_('SEM_0142'));
-    }
-    if($fehler[6]=="" AND $fehler[7]=="") {
-      $row->file4 = $_FILES['datei4']['name'];
-      $row->file4code = base64_encode(file_get_contents($_FILES['datei4']['tmp_name']));
-    }
-  }
-  if(is_file($_FILES['datei5']['tmp_name']) AND $_FILES['datei5']['size']>0) {
-    if($_FILES['datei5']['size']>$filesize) {
-      $fehler[8] = str_replace("SEM_FILE",$_FILES['datei5']['name'],JTEXT::_('SEM_0141'));
-    }
-		$datei5ext = array_pop(explode( ".",strtolower($_FILES['datei5']['name'])));
-  	if(!in_array($datei5ext,$fileext)) {
-      $fehler[9] = str_replace("SEM_FILE",$_FILES['datei5']['name'],JTEXT::_('SEM_0142'));
-    }
-    if($fehler[8]=="" AND $fehler[9]=="") {
-      $row->file5 = $_FILES['datei5']['name'];
-      $row->file5code = base64_encode(file_get_contents($_FILES['datei5']['tmp_name']));
-    }
-  }
+  $kurs = sem_f077($id);
+  $row = $kurs[0];
+  $fehler = $kurs[1];
 
 // Eingaben ueberpruefen
   $speichern = TRUE;
+  $fehler1 = array();
   if($art==3) {
-    if(!sem_f067($row->pattern,'leer')) {
-      $speichern = FALSE;
-      $fehler[] = JTEXT::_('SEM_2044');
+    if(sem_f067($row->pattern,'leer')) {
+      $fehler1[] = JTEXT::_('SEM_2058');
     }
   } else {
-    if(!sem_f067($row->semnum,'leer') OR !sem_f067($row->title,'leer') OR $row->catid==0 OR !sem_f067($row->shortdesc,'leer') OR !sem_f067($row->place,'leer')) {
-      $speichern = FALSE;
-      $fehler[] = JTEXT::_('SEM_2044');
-    } elseif(!sem_f067($row->maxpupil,'nummer') OR !sem_f067($row->nrbooked,'nummer')) {
-      $speichern = FALSE;
-      $fehler[] = JTEXT::_('SEM_2045');
-    } else {
-      $database->setQuery("SELECT id FROM #__seminar WHERE semnum='$row->semnum' AND id!='$row->id'");
-      $rows = $database->loadObjectList();
-      if(count($rows)>0) {
-        $speichern = FALSE;
-        $htxt = JTEXT::_('SEM_0151');
-        if($id<1) {
-          $htxt .= " ".JTEXT::_('SEM_0152');
-        }
-        $fehler[] = $htxt;
-      }
-    }
+    $fehler1 = sem_f078($row);
   }
+  if(count($fehler1)>0) {
+    $speichern = FALSE;
+  }
+  $fehler = array_unique(array_merge($fehler1,$fehler));
 
 // Kurs speichern
   if($speichern==TRUE) {
     if (!$row->check()) {
-      JError::raiseError( 500, $database->stderr() );
+      JError::raise(E_ERROR,500,$database->stderr());
       return false;
     }
     if (!$row->store()) {
-      JError::raiseError( 500, $database->stderr() );
+      JError::raise(E_ERROR,500,$database->stderr());
       return false;
     }
     $row->checkin();
-    $row->reorder( "catid='$row->catid'" );
   }
+
 // Ausgabe der Kurse
-  $fehlerzahl = array_unique($fehler);
-  if (count($fehlerzahl)>1) {
-    $fehler = array_unique($fehler);
-    if($fehler[0]=="") {
-      $fehler = array_slice($fehler,1);
+  if(count($fehler)>0) {
+    JError::raise(E_WARNING,1,implode("</li><li>",$fehler));
+    if($speichern==TRUE) {
+      sem_g006($row->id,$art);
+    } else {
+      sem_g006($row->id,$art,$row);
     }
-    $fehler = implode("<br />",$fehler);
-    JError::raiseWarning(1,$fehler);
-  }
-// Ausgabe der Kurse
-  if(count($fehlerzahl)>1 AND $speichern == TRUE) {
-    sem_g006($row->id,$art);
-  } elseif (count($fehlerzahl)>1 AND $speichern == FALSE) {
-    sem_g006($row->id,$art,$row);
   } else {
     if($art==2) {
+      if(JRequest::getInt('inform',0)>0) {
+        sem_f075($row,$emailart,JRequest::getVar('infotext',''));  
+      }
       sem_g027();
     } else {
       sem_g032();
@@ -727,17 +559,11 @@ function sem_g027() {
 
 function sem_g023($cid,$art) {
   $database = &JFactory::getDBO();
-  if (count( $cid )) {
-    $cids = implode( ',', $cid );
+  if (count($cid)) {
+    $cids = implode(',',$cid);
     if($art==2) {
-      $database->setQuery( "SELECT * FROM #__sembookings WHERE semid IN ($cids)" );
-      $rows = $database->loadObjectList();
-      if ($database->getErrorNum()) {
-        JError::raiseError(500,$database->stderr());
-        exit();
-      }
-      foreach ($rows AS $row) {
-        sem_f050( $row->semid, $row->id, 4);
+      foreach ($cid AS $semid) {
+        sem_f075($semid,3);
       }
       $database->setQuery( "DELETE FROM #__sembookings WHERE semid IN ($cids)" );
       if (!$database->query()) {
@@ -764,27 +590,19 @@ function sem_g023($cid,$art) {
 
 function sem_g024($cid,$publish,$art) {
   $database = &JFactory::getDBO();
-  $catid = JRequest::getVar('catid',array(0));
-
-  if (count( $cid )) {
-    $cids = implode( ',', $cid );
+  if(count($cid)) {
+    $cids = implode(',',$cid);
     if($art==2) {
-      $database->setQuery( "SELECT * FROM #__sembookings WHERE semid IN ($cids)" );
-      $rows = $database->loadObjectList();
-      if ($database->getErrorNum()) {
-        JError::raiseError(500,$database->stderr());
-        exit();
-      }
-      foreach ($rows AS $row) {
-        If($publish==0) {
-         sem_f050( $row->semid, $row->id, 4);
+      foreach ($cid AS $semid) {
+        if($publish==0) {
+         sem_f075($semid,3);
         } else {
-         sem_f050( $row->semid, $row->id, 5);
+         sem_f075($semid,4);
         }
       }
     }
     $database->setQuery( "UPDATE #__seminar SET published='$publish' WHERE id IN ($cids) ");
-    if (!$database->query()) {
+    if(!$database->query()) {
       JError::raiseError(500,$database->stderr());
       exit();
     }
@@ -800,28 +618,22 @@ function sem_g024($cid,$publish,$art) {
 // +++ Kurse absagen              +++
 // ++++++++++++++++++++++++++++++++++
 
-function sem_g025($cid=null,$cancelled=1) {
+function sem_g025($cid,$cancelled) {
   $database = &JFactory::getDBO();
   $catid = JRequest::getVar('catid',array(0));
-  if (count( $cid )) {
+  if(count( $cid )) {
     $cids = implode( ',', $cid );
-    $database->setQuery( "SELECT * FROM #__sembookings WHERE semid IN ($cids)" );
-    $rows = $database->loadObjectList();
-    if ($database->getErrorNum()) {
-      JError::raiseError(500,$database->stderr());
-      exit();
-    }
-    foreach ($rows AS $row) {
-      If($cancelled==0) {
-       sem_f050( $row->semid, $row->id, 9);
-      } else {
-       sem_f050( $row->semid, $row->id, 10);
-      }
-    }
     $database->setQuery( "UPDATE #__seminar SET cancelled='$cancelled' WHERE id IN ($cids) ");
     if (!$database->query()) {
       JError::raiseError(500,$database->stderr());
       exit();
+    }
+    foreach ($cid AS $semid) {
+      if($cancelled==0) {
+       sem_f075($semid,2,JTEXT::_('SEM_0100'));
+      } else {
+       sem_f075($semid,2,JTEXT::_('SEM_0098'));
+      }
     }
   }
   sem_g027();
@@ -1235,6 +1047,7 @@ function sem_g032() {
 
 function sem_g033() {
   TOOLBAR_seminar::_CONFIG();
+//  $database = &JFactory::getDBO();
   $table =& JTable::getInstance('component');
   $option = JRequest::getCmd('option');
   if (!$table->loadByOption($option)) {
@@ -1251,6 +1064,7 @@ function sem_g033() {
 // +++++++++++++++++++++++++++++++++++
 
 function sem_g034() {
+  $database = &JFactory::getDBO();
   $table =& JTable::getInstance('component');
   $option = JRequest::getCmd('option');
   if (!$table->loadByOption($option)) {
@@ -1261,14 +1075,85 @@ function sem_g034() {
   $post['option'] = $option;
   $table->bind($post);
   if (!$table->check()) {
-    JError::raiseWarning(500, $table->getError());
+    JError::raiseError(500, $table->getError());
     return false;
   }
   if (!$table->store()) {
-    JError::raiseWarning(500, $table->getError());
+    JError::raiseError(500, $table->getError());
     return false;
   }
-  JError::raiseNotice(1,JTEXT::_('SEM_2030'));
+  $meldung = array();
+  $pfad = JPATH_COMPONENT_SITE.DS."css".DS;
+  $css0code=JRequest::getVar('css0code','','post','string',JREQUEST_ALLOWHTML);
+  if(!file_put_contents($pfad."seminar.0.css",$css0code)) {
+    $meldung[] = str_replace("SEM_FILE","seminar.0.css",JTEXT::_('SEM_E071'));
+  }
+  $css1code=JRequest::getVar('css1code','','post','string',JREQUEST_ALLOWHTML);
+  if(!file_put_contents($pfad."seminar.1.css",$css1code)) {
+    $meldung[] = str_replace("SEM_FILE","seminar.1.css",JTEXT::_('SEM_E071'));
+  }
+  $set = array();
+  $set[] = "overview_event_header='".JRequest::getVar('overview_event_header','','post','string',JREQUEST_ALLOWHTML)."'";
+  $set[] = "overview_nr_of_events='".JRequest::getInt('overview_nr_of_events',1,'post')."'";
+  $set[] = "overview_event='".JRequest::getVar('overview_event','','post','string',JREQUEST_ALLOWHTML)."'";
+  $set[] = "overview_event_footer='".JRequest::getVar('overview_event_footer','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "overview_booking_header='".JRequest::getVar('overview_booking_header','','post','string',JREQUEST_ALLOWHTML)."'";
+  $set[] = "overview_nr_of_bookings='".JRequest::getInt('overview_nr_of_bookings',1,'post')."'";
+  $set[] = "overview_booking='".JRequest::getVar('overview_booking','','post','string',JREQUEST_ALLOWHTML)."'";
+  $set[] = "overview_booking_footer='".JRequest::getVar('overview_booking_footer','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "overview_offer_header='".JRequest::getVar('overview_offer_header','','post','string',JREQUEST_ALLOWHTML)."'";
+  $set[] = "overview_nr_of_offers='".JRequest::getInt('overview_nr_of_offers',1,'post')."'";
+  $set[] = "overview_offer='".JRequest::getVar('overview_offer','','post','string',JREQUEST_ALLOWHTML)."'";
+  $set[] = "overview_offer_footer='".JRequest::getVar('overview_offer_footer','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "event='".JRequest::getVar('event','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "booking='".JRequest::getVar('booking','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "booked='".JRequest::getVar('booked','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "certificate='".JRequest::getVar('certificate','','post','string', JREQUEST_ALLOWHTML)."'";
+  $database->setQuery( "UPDATE #__semlayouts"
+  . (count($set) ? "\nSET " . implode( ', ', $set ) : "")
+  . "\nWHERE chosen = 1"
+  );
+  if (!$database->query()) {
+    JError::raiseError(500,$database->stderr());
+    exit();
+  }
+  $set = array();
+  $set[] = "new='".JRequest::getVar('new','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "new_type='".JRequest::getInt('new_type',0,'post')."'";
+  $set[] = "changed='".JRequest::getVar('changed','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "changed_type='".JRequest::getInt('changed_type',0,'post')."'";
+  $set[] = "unpublished_recent='".JRequest::getVar('unpublished_recent','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "unpublished_recent_type='".JRequest::getInt('unpublished_recent_type',0,'post')."'";
+  $set[] = "unpublished_over='".JRequest::getVar('unpublished_over','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "unpublished_over_type='".JRequest::getInt('unpublished_over_type',0,'post')."'";
+  $set[] = "republished_recent='".JRequest::getVar('republished_recent','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "republished_recent_type='".JRequest::getInt('republished_recent_type',0,'post')."'";
+  $set[] = "republished_over='".JRequest::getVar('republished_over','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "republished_over_type='".JRequest::getInt('republished_over_type',0,'post')."'";
+  $set[] = "booked='".JRequest::getVar('booked2','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "booked_type='".JRequest::getInt('booked2_type',0,'post')."'";
+  $set[] = "bookingchanged='".JRequest::getVar('bookingchanged','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "bookingchanged_type='".JRequest::getInt('bookingchanged_type',0,'post')."'";
+  $set[] = "canceled='".JRequest::getVar('canceled','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "canceled_type='".JRequest::getInt('canceled_type',0,'post')."'";
+  $set[] = "paid='".JRequest::getVar('paid','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "paid_type='".JRequest::getInt('paid_type',0,'post')."'";
+  $set[] = "unpaid='".JRequest::getVar('unpaid','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "unpaid_type='".JRequest::getInt('unpaid_type',0,'post')."'";
+  $set[] = "certificated='".JRequest::getVar('certificated','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "certificated_type='".JRequest::getInt('certificated_type',0,'post')."'";
+  $set[] = "uncertificated='".JRequest::getVar('uncertificated','','post','string', JREQUEST_ALLOWHTML)."'";
+  $set[] = "uncertificated_type='".JRequest::getInt('uncertificated_type',0,'post')."'";
+  $database->setQuery( "UPDATE #__sememails"
+  . (count($set) ? "\nSET " . implode( ', ', $set ) : "")
+  . "\nWHERE chosen = 1"
+  );
+  if (!$database->query()) {
+    JError::raiseError(500,$database->stderr());
+    exit();
+  }
+  $meldung[] = JTEXT::_('SEM_2030');
+  JError::raiseNotice(1,implode("<br />",$meldung));
   sem_g033();
 }
 
@@ -1277,6 +1162,9 @@ function sem_g034() {
 // ++++++++++++++++++++++++++++++++++++++
 
 class TOOLBAR_seminar {
+  function _HOME() {
+    JToolBarHelper::title(JText::_('SEM_0043'),'sem_home');
+  }
   function _NEW() {
     JToolBarHelper::title(JText::_('SEM_0060'),'sem_event');
     JToolBarHelper::save('14');
@@ -1285,7 +1173,7 @@ class TOOLBAR_seminar {
   function _EDIT() {
     JToolBarHelper::title(JText::_('SEM_0051'),'sem_event');
     JToolBarHelper::save('14');
-    JToolBarHelper::cancel('0');
+    JToolBarHelper::cancel('2');
   }
   function _STAT() {
     JToolBarHelper::title(JText::_('SEM_2018'),'sem_statistic');
@@ -1299,7 +1187,7 @@ class TOOLBAR_seminar {
   function _VIEW_BOOK() {
     JToolBarHelper::title(JText::_('SEM_0035'),'sem_event');
     JToolBarHelper::deleteList('','28');
-    JToolBarHelper::custom("show","back.png","back_f2.png","Back",false);
+    JToolBarHelper::custom("2","back.png","back_f2.png","Back",false);
   }
   function _VIEW_STAT() {
     JToolBarHelper::title(JText::_('SEM_2018'),'sem_statistic');

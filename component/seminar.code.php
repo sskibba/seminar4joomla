@@ -2,10 +2,10 @@
 
 //*******************************************
 //***         Seminar for joomla!         ***
-//***            Version 1.3.0            ***
+//***            Version 1.4.0            ***
 //*******************************************
 //***     Copyright (c) Dirk Vollmar      ***
-//***             2004 / 2009             ***
+//***                 2010                ***
 //***          joomla@vollmar.ws          ***
 //***         All rights reserved         ***
 //*******************************************
@@ -19,47 +19,47 @@
 function Code39 ($Asc) {
   switch ($Asc) {
     case ' ':
-      return "011000100";     
+      return "011000100";
     case '$':
-      return "010101000";             
+      return "010101000";
     case '%':
-      return "000101010"; 
+      return "000101010";
     case '*':
       return "010010100";
     case '+':
-      return "010001010"; 
+      return "010001010";
     case '|':
-      return "010000101"; 
+      return "010000101";
     case '.':
-      return "110000100"; 
+      return "110000100";
     case '/':
-      return "010100010"; 
+      return "010100010";
     case '-':
       return "010000101";
     case '0':
-      return "000110100"; 
+      return "000110100";
     case '1':
-      return "100100001"; 
+      return "100100001";
     case '2':
-      return "001100001"; 
+      return "001100001";
     case '3':
-      return "101100000"; 
+      return "101100000";
     case '4':
-      return "000110001"; 
+      return "000110001";
     case '5':
-      return "100110000"; 
+      return "100110000";
     case '6':
-      return "001110000"; 
+      return "001110000";
     case '7':
-      return "000100101"; 
+      return "000100101";
     case '8':
-      return "100100100"; 
+      return "100100100";
     case '9':
-      return "001100100"; 
+      return "001100100";
     case 'A':
-      return "100001001"; 
+      return "100001001";
     case 'B':
-      return "001001001"; 
+      return "001001001";
     case 'C':
       return "101001000";
     case 'D':
@@ -109,7 +109,7 @@ function Code39 ($Asc) {
     case 'Z':
       return "011010000";
     default:
-      return "011000100"; 
+      return "011000100";
   }
 }
 

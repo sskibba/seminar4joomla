@@ -2,11 +2,11 @@
 
 //*******************************************
 //***         Seminar for joomla!         ***
-//***            Version 1.3.0            ***
+//***            Version 1.4.0            ***
 //*******************************************
 //***     Copyright (c) Dirk Vollmar      ***
-//***             2004 / 2009             ***
-//***          joomla@vollmar.ws          ***
+//***                 2011                ***
+//***         seminar@vollmar.ws          ***
 //***         All rights reserved         ***
 //*******************************************
 //*     Released under GNU/GPL License      *
@@ -16,6 +16,185 @@
 defined('_JEXEC') or die('Restricted access');
 
 class HTML_Seminar {
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// + Ausgabe des Kontrollzentrums                           +
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  function sem_g001($rows) {
+    function quickiconButton($link,$image,$text,$langisrtl ) {
+      $grafik = str_replace("components","administrator/components",sem_f045($image,$text));
+      return "<div style=\"float:".($langisrtl ? 'right' : 'left').";\"><div class=\"icon\"><a href=\"".$link.">".$grafik."<span>".$text."</span></a></div></div>";
+    }
+    jimport('joomla.html.pane');
+    $config = &JComponentHelper::getParams('com_seminar');
+    $lang = &JFactory::getLanguage();
+    $sprachart = $lang->getTag();
+    $sprache = strtolower(substr($sprachart,0,2));
+    $langisrtl = $lang->isRTL();
+    $html = "<table class=\"adminform\"><tr><td width=\"55%\" valign=\"top\"><div id=\"cpanel\">";
+    $link = "index.php?option=".JRequest::getCmd('option')."&amp;task=";
+    $html .= quickiconbutton($link."2\"","icon-48-sem_event",JText::_('SEM_0083'),$langisrtl);
+    $html .= quickiconButton($link."1\"","icon-48-sem_pattern",JText::_('SEM_2023'),$langisrtl);
+    $html .= quickiconButton("index.php?option=com_categories&amp;section=".JRequest::getCmd('option')."\"","icon-48-sem_category",JText::_('SEM_2008'),$langisrtl);
+//    $html .= quickiconButton($link."5\"","icon-48-sem_payctrl",JText::_('SEM_2046'),$langisrtl);
+    $html .= quickiconButton($link."3\"","icon-48-sem_config",JText::_('SEM_2029'),$langisrtl);
+    $html .= quickiconButton($link."4\"","icon-48-sem_statistic",JText::_('SEM_2018'),$langisrtl);
+    $html .= "</div></td><td width=\"45%\" valign=\"top\"><div style=\"width: 100%\">";
+    $pane =& JPane::getInstance('sliders');
+    $html .= $pane->startPane('pane');
+
+    $panel = 1;
+// Panel 1 - Aktuelle Veranstaltungen
+    if(count($rows)>0) {
+      $html .= $pane->startPanel(JText::_('SEM_0039'),"panel".$panel);
+      $html .= "<table class=\"adminlist\"><thead><tr><td><strong>";
+      $html .= JTEXT::_('SEM_0007')."</strong></td><td><strong>".JTEXT::_('SEM_0009')."</strong></td><td><strong>".JTEXT::_('SEM_0058')."</strong></td><td><strong>".JTEXT::_('SEM_0035')."</strong></td></tr></thead><tbody>";
+      foreach($rows as $row) {
+        $gebucht = sem_f020($row);
+        if(strlen($row->title)<30) {
+          $title = $row->title;
+        } else {
+          $title = substr($row->title,0,27)."...";
+        }
+        $html .= "<tr><td nowrap>".$title."</td><td nowrap>".JHTML::_('date',$row->begin,$config->get('sem_p069',JTEXT::_('SEM_0169')),0).", ".JHTML::_('date',$row->begin,$config->get('sem_p070',JTEXT::_('SEM_0170')),0)."</td><td><center>".$row->hits."</center></td><td><center>".$gebucht->booked."</center></td></tr>";
+      }
+      $html .= "</tbody></table>";
+      $html .= $pane->endPanel();
+    }
+
+// Panel 2 - Neues
+    if($config->get('sem_p003',1)==1) {
+      if(!PREG_MATCH('~HTTP/1\.\d\s+200\s+OK~', @CURRENT(get_headers("http://seminar.vollmar.ws/help/news_".$sprache.".txt")))) {
+        $sprache = "en";
+      }
+      if(PREG_MATCH('~HTTP/1\.\d\s+200\s+OK~', @CURRENT(get_headers("http://seminar.vollmar.ws/help/news_".$sprache.".txt")))) {
+        $panel++;
+        $text = trim(file_get_contents("http://seminar.vollmar.ws/help/news_".$sprache.".txt"));
+        $html .= $pane->startPanel(JText::_('SEM_2055'),"panel".$panel);
+        $html .= "<table class=\"adminlist\"><tbody><tr><td><marquee height=\"120px\" align=\"left\" behavior=\"scroll\" direction=\"up\" scrollamount=\"1\" scrolldelay=\"50\" truespeed onmouseover=\"this.stop();\" onmouseout=\"this.start();\">";
+        $html .= $text;
+        $html .= "</marquee></td></tr></tbody></table>";
+        $html .= $pane->endPanel();
+      }
+
+// Panel 3 - Versionspruefung
+      if(PREG_MATCH('~HTTP/1\.\d\s+200\s+OK~', @CURRENT(get_headers("http://seminar.vollmar.ws/help/com_version.txt")))) {
+        $panel++;
+        $html .= $pane->startPanel(JText::_('SEM_2044'),"panel".$panel);
+        $version = sem_f001();
+        $remote_version=trim(file_get_contents("http://seminar.vollmar.ws/help/com_version.txt"));
+        $version_check =  version_compare($version,$remote_version);
+        $grafik = sem_f045("2200","");
+        if($version_check>-1) {
+          $grafik = sem_f045("2201","");
+        }
+        $html .= "<table class=\"adminlist\">";
+        $html .= "<thead><tr><td><strong>".JText::_('SEM_2056')." ".$grafik."</strong></td></tr></thead><tbody><tr>";
+        if($version_check>-1) {
+          $html .= "<td>".str_replace("SEM_VERSION","V".$version,JText::_('SEM_2045'))."</td>";
+        } else {
+          $html .= "<td>".str_replace("SEM_VERSION","V".$version,JText::_('SEM_2047'));
+          $datei = "http://seminar.vollmar.ws/downloads/com_Seminar_upgrade_V".$version."_to_V".$remote_version.".zip";
+          if(!PREG_MATCH('~HTTP/1\.\d\s+200\s+OK~', @CURRENT(get_headers($datei)))) {
+            $datei = "http://seminar.vollmar.ws/downloads/com_Seminar_V".$remote_version.".zip";
+          }
+          if(PREG_MATCH('~HTTP/1\.\d\s+200\s+OK~', @CURRENT(get_headers($datei)))) {
+            $html .= "<center><form enctype=\"multipart/form-data\" action=\"index.php\" method=\"post\" name=\"updatecom\">";
+            $html .= "<input type=\"button\" class=\"button\" onClick=\"location.href='".$datei."'\" style=\"cursor:pointer;\" value=\"".str_replace("SEM_VERSION","V".$remote_version,JText::_('SEM_2048'))."\">";
+            $html .= "<input type=\"hidden\" name=\"install_url\" value=\"".$datei."\" />";
+            $html .= "<input type=\"hidden\" name=\"type\" value=\"\" />";
+            $html .= "<input type=\"hidden\" name=\"installtype\" value=\"url\" />";
+            $html .= "<input type=\"hidden\" name=\"task\" value=\"doInstall\" />";
+            $html .= "<input type=\"hidden\" name=\"option\" value=\"com_installer\" />";
+            $html .= JHTML::_( 'form.token' );
+            $html .= "<br /><input type=\"button\" class=\"button\" onClick=\"if (confirm(unescape('".str_replace("SEM_VERSION","V".$remote_version,JText::_('SEM_A202'))."'))) {document.updatecom.submit()};\" style=\"cursor:pointer;\" value=\"".str_replace("SEM_VERSION","V".$remote_version,JText::_('SEM_2049'))."\"></form></center>";
+          } else {
+            $html .= " ".str_replace("SEM_VERSION","V".$remote_version,JText::_('SEM_2060'));
+          }
+          $html .= "</td>";
+        }
+        $sprachversion = JText::_('SEM_VERSION');
+        $version_check = version_compare($sprachversion,$version);
+        $grafik = sem_f045("2200","");
+        if($version_check>-1) {
+          $grafik = sem_f045("2201","");
+        }
+        $html .= "</tr></tbody><thead><tr><td><strong>".JText::_('SEM_2057')." ".$grafik."</strong></td></tr></thead><tbody><tr>";
+        if($version_check>-1) {
+          $html .= "<td>".str_replace("SEM_VERSION",$sprachart.".V".$sprachversion,JText::_('SEM_2045'))."</td>";
+        } else {
+          $html .= "<td>".str_replace("SEM_VERSION",$sprachart.".V".$sprachversion,JText::_('SEM_2047'));
+          $datei = "http://seminar.vollmar.ws/downloads/".$sprachart.".com_Seminar_V".$version.".zip";
+          if(PREG_MATCH('~HTTP/1\.\d\s+200\s+OK~', @CURRENT(get_headers($datei)))) {
+            $html .= "<center><form enctype=\"multipart/form-data\" action=\"index.php\" method=\"post\" name=\"updatelang\">";
+            $html .= "<input type=\"button\" class=\"button\" onClick=\"location.href='".$datei."'\" style=\"cursor:pointer;\" value=\"".str_replace("SEM_VERSION",$sprachart.".V".$version,JText::_('SEM_2048'))."\">";
+            $html .= "<input type=\"hidden\" name=\"install_url\" value=\"".$datei."\" />";
+            $html .= "<input type=\"hidden\" name=\"type\" value=\"\" />";
+            $html .= "<input type=\"hidden\" name=\"installtype\" value=\"url\" />";
+            $html .= "<input type=\"hidden\" name=\"task\" value=\"doInstall\" />";
+            $html .= "<input type=\"hidden\" name=\"option\" value=\"com_installer\" />";
+            $html .= JHTML::_( 'form.token' );
+            $html .= "<br /><input type=\"button\" class=\"button\" onClick=\"if (confirm(unescape('".str_replace("SEM_VERSION",$sprachart.".V".$version,JText::_('SEM_A202'))."'))) {document.updatelang.submit()};\" style=\"cursor:pointer;\" value=\"".str_replace("SEM_VERSION",$sprachart.".V".$version,JText::_('SEM_2049'))."\"></form></center>";
+          } else {
+            $html .= " ".str_replace("SEM_VERSION",$sprachart.".V".$version,JText::_('SEM_2060'));
+          }
+          $html .= "</td>";
+        }
+        $html .= "</tr></tbody></table>".$pane->endPanel(); 
+      }
+    }
+
+// Panel 4 - Copyright entfernen
+    if(sem_f053()==TRUE) {
+      $panel++;
+      $html .= $pane->startPanel(JText::_('SEM_2052'),"panel".$panel);
+      $html .= "<table class=\"adminlist\"><tbody><tr><td>".JText::_('SEM_2053')." ".sem_f074("a","a")."</td></tr></tbody></table>";
+      $html .= $pane->endPanel();
+    } 
+
+// Panel 5 - Spenden
+    $panel++;
+    $html .= $pane->startPanel(JText::_('SEM_2050'),"panel".$panel);
+    $html .= "<form action=\"https://www.paypal.com/de/cgi-bin/webscr\" method=\"post\" target=\"paypal\">";
+    $html .= "<table class=\"adminlist\"><thead><tr><td><strong>";
+    $html .= JText::_('SEM_2051')."</strong></td></tr></thead><tbody><tr><td><center>";
+    $html .= "<input type=\"hidden\" name=\"cmd\" value=\"_donations\" />";
+    $html .= "<input type=\"hidden\" name=\"business\" value=\"seminar@vollmar.ws\" />";
+    $html .= "<input type=\"hidden\" name=\"undefined_quantity\" value=\"0\" />";
+    $html .= "<input type=\"hidden\" name=\"item_name\" value=\"Spende - Donation - Seminar\" />";
+    $html .= "<input type=\"text\" name=\"amount\" size=\"4\" maxlength=\"10\" value=\"\" style=\"text-align:right;\" /> ";
+    $html .= "<select name=\"currency_code\">";
+    $html .= "<option value=\"EUR\">EUR</option>";
+    $html .= "<option value=\"USD\">USD</option>";
+    $html .= "<option value=\"GBP\">GBP</option>";
+    $html .= "<option value=\"CHF\">CHF</option>";
+    $html .= "<option value=\"AUD\">AUD</option>";
+    $html .= "<option value=\"HKD\">HKD</option>";
+    $html .= "<option value=\"CAD\">CAD</option>";
+    $html .= "<option value=\"JPY\">JPY</option>";
+    $html .= "<option value=\"NZD\">NZD</option>";
+    $html .= "<option value=\"SGD\">SGD</option>";
+    $html .= "<option value=\"SEK\">SEK</option>";
+    $html .= "<option value=\"DKK\">DKK</option>";
+    $html .= "<option value=\"PLN\">PLN</option>";
+    $html .= "<option value=\"NOK\">NOK</option>";
+    $html .= "<option value=\"HUF\">HUF</option>";
+    $html .= "<option value=\"CZK\">CZK</option>";
+    $html .= "<option value=\"ILS\">ILS</option>";
+    $html .= "<option value=\"MXN\">MXN</option>";
+    $html .= "</select>";
+    $html .= "<input type=\"hidden\" name=\"charset\" value=\"utf-8\" />";
+    $html .= "<input type=\"hidden\" name=\"no_shipping\" value=\"1\" />";
+    $html .= "<input type=\"hidden\" name=\"no_note\" value=\"0\" /> ";
+    $html .= "<input type=\"submit\" value=\"OK\" alt=\"PayPal secure payments.\" />";
+    $html .= "</center></td></tr></tbody></table></form>";
+    $html .= $pane->endPanel(); 
+
+    $html .= $pane->endPane();
+    $html .= "</div></td></tr></table>";
+    echo $html;
+  }
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // + Ausgabe der Kursuebersicht                           +
@@ -181,7 +360,7 @@ class HTML_Seminar {
 // --------------------------------------------------------
 
     $html .= "\n<input type=\"hidden\" name=\"option\" value=\"".JRequest::getCmd('option')."\" />";
-    $html .= "<input type=\"hidden\" name=\"task\" value=\"\" />";
+    $html .= "<input type=\"hidden\" name=\"task\" value=\"2\" />";
     $html .= "<input type=\"hidden\" name=\"uid\" value=\"\" />";
     $html .= "<input type=\"hidden\" name=\"boxchecked\" value=\"0\" />";
     $html .= "<input type=\"hidden\" name=\"limitstart\" value=\"".$limitstart."\" />";
@@ -244,7 +423,7 @@ class HTML_Seminar {
 
     $html .= "\n<table class=\"adminlist\"><thead>";
     $temp3 = "<input type=\"checkbox\" name=\"toggle\" value=\"\" onclick=\"checkAll(".count( $rows ).");\" />";
-    $temp = array($temp3,JTEXT::_('SEM_0059'),JTEXT::_('SEM_0052'),JTEXT::_('SEM_0032'),JTEXT::_('SEM_0033'));
+    $temp = array($temp3,JTEXT::_('SEM_0059'),JTEXT::_('SEM_0052'),JTEXT::_('SEM_0032'),JTEXT::_('SEM_0080'));
     if( $kurs->fees > 0) {
       $temp[] = JTEXT::_('SEM_0065');
     }
@@ -305,7 +484,7 @@ class HTML_Seminar {
           $certtitel = JTEXT::_('SEM_0091');
           if($row->certificated == 1) {
             $certbild = "2201.png";
-            $certtemp = " ".sem_f038(3,$row->sid);
+            $certtemp = " <a title=\"".JTEXT::_('SEM_0092')."\" class=\"modal\" href=\"".sem_f004()."index2.php?option=com_seminar&amp;tesk=".base64_encode("16||".$row->uniqid)."\" rel=\"{handler: 'iframe', size: {x: ".$config->get('sem_p097',500).", y: ".$config->get('sem_p098',350)."}}\">".sem_f045("2900",JTEXT::_('SEM_0092'))."</a>";
             $certtitel = JTEXT::_('SEM_0090');
           }
           $htxt = "<a title=\"".$certtitel."\" href=\"javascript: void(0);\" onclick=\"return listItemTask('cb".$i."','26')\"><img src=\"".sem_f006().$certbild."\" border=\"0\" alt=\"".JTEXT::_('SEM_0040')."\"></a>".$certtemp;
@@ -731,6 +910,9 @@ class HTML_Seminar {
         $temp4 = "<a href=\"javascript: void(0);\" onclick=\"return listItemTask('cb".$i."','".$task."')\"><img src=\"".sem_f006().$img."\" border=\"0\" alt=\"\" /></a>";
         $temp = JFactory::getuser($row->publisher);
         $temp10 = $temp->name;
+        if($row->publisher==0) {
+          $temp10 = JTEXT::_('SEM_0135');
+        }
         $temp11 = JHTML::_('date',$row->publishdate,$config->get('sem_p069',JTEXT::_('SEM_0169')),0).", ".JHTML::_('date',$row->publishdate,$config->get('sem_p070',JTEXT::_('SEM_0170')),0);
         $temp12 = JHTML::_('date',$row->updated,$config->get('sem_p069',JTEXT::_('SEM_0169')),0).", ".JHTML::_('date',$row->updated,$config->get('sem_p070',JTEXT::_('SEM_0170')),0);
         $temp = array($temp1,$temp2,$temp3,$temp10,$temp11,$temp12,$temp4,$row->id);
@@ -764,8 +946,140 @@ class HTML_Seminar {
 // ++++++++++++++++++++++++++++++
 
   function sem_g033($params) {
-    $html = sem_f026(4);
-    $html .= $params->render();
+    jimport('joomla.html.pane');
+    $document = &JFactory::getDocument();
+    JFilterOutput::objectHTMLSafe($params);
+    JHTML::_('behavior.modal');
+    $option = JRequest::getCmd('option');
+    $layout = sem_f047();
+    $emails = sem_f082();
+    $html .= sem_f026(4);
+    $htxt = $params->render();
+    $htxt = str_replace("width=\"40%\" ","",$htxt);
+    $htxt = str_replace("<td class=\"paramlist_key\"><span class=\"editlinktip\">&nbsp;</span></td>\n<td class=\"paramlist_value\"><hr /></td>","<td class=\"plist_empty\"></td>",$htxt);
+    $codetext = "</label></span></td>\n<td class=\"paramlist_value\"><input type=\"text\" name=\"params[sem_p019]\"";
+    $htxt = str_replace($codetext," ".sem_f074("a","a").$codetext,$htxt);
+    $htxt = str_replace("cellspacing=\"1\"","cellspacing=\"0\"",$htxt);
+    $htxt = str_replace("paramlist_key","plist_key",$htxt);
+    $htxt = str_replace("paramlist_value","plist_value",$htxt);
+    $htxt = str_replace("class=\"paramlist admintable\" ","",$htxt); 
+    $htxt = str_replace("</td><td","</td></tr>\n<tr><td",$htxt); 
+    $htxt = str_replace("</td>\n<td","</td></tr>\n<tr><td",$htxt); 
+    $pfad = JPATH_COMPONENT_SITE.DS."css".DS;
+    $css0code = file_get_contents($pfad."seminar.0.css");
+    $css1code = file_get_contents($pfad."seminar.1.css");
+    
+    $pane =& JPane::getInstance('tabs',array('allowAllClose' => true));
+    $html .= $pane->startPane('pane');
+
+// Panel 1 - Grundeinstellungen
+
+    $html .= $pane->startPanel(JTEXT::_('SEM_E007'),'panel1');
+    $html .= "<br />";
+    $html .= $htxt;
+    $html .= $pane->endPanel();
+
+// Panel 2 - CSS-Dateien
+
+    $html .= $pane->startPanel(JTEXT::_('SEM_E073'),'panel2');
+    $html .= "<br />";
+    $html .= "<table width=\"100%\" cellspacing=\"0\">";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E045')." ".JTEXT::_('SEM_E046'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"css0code\" cols=\"80\" rows=\"20\" class=\"text_area\">".$css0code."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E045')." ".JTEXT::_('SEM_E047'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"css1code\" cols=\"80\" rows=\"20\" class=\"text_area\">".$css1code."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= sem_f023(e);
+    $html .= $pane->endPanel();
+
+// Panel 3 - Aussehen und Inhalte
+
+    $limits = array();
+    for( $i=1; $i<=10; $i++) {
+      $limits[] = JHTML::_('select.option',"$i");
+    }
+    $html .= $pane->startPanel(JTEXT::_('SEM_E030'),'panel3');
+    $html .= "<br />";
+    $html .= "<table width=\"100%\" cellspacing=\"0\">";
+
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E031')." ".sem_f074('hftags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_event_header\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_event_header."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E053'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.genericlist', $limits, 'overview_nr_of_events','', 'value', 'text', $layout->overview_nr_of_events),'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E054')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_event\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_event."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E055')." ".sem_f074('hftags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_event_footer\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_event_footer."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E034')." ".sem_f074('hftags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_booking_header\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_booking_header."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E053'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.genericlist', $limits, 'overview_nr_of_bookings','', 'value', 'text', $layout->overview_nr_of_bookings),'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E025')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_booking\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_booking."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E008')." ".sem_f074('hftags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_booking_footer\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_booking_footer."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E039')." ".sem_f074('hftags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_offer_header\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_offer_header."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E053'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.genericlist', $limits, 'overview_nr_of_offers','', 'value', 'text', $layout->overview_nr_of_offers),'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E040')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_offer\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_offer."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E041')." ".sem_f074('hftags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"overview_offer_footer\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->overview_offer_footer."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E076')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"event\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->event."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E006')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"booked\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->booked."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E077')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"booking\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->booking."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E042')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"certificate\" cols=\"80\" rows=\"10\" class=\"text_area\">".$layout->certificate."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= sem_f023(e);
+    $html .= $pane->endPanel();
+
+// Panel 4 - E-Mails
+
+    $emailart = array();
+    $emailart[] = JHTML::_('select.option',0,JTEXT::_('NO'));
+    $emailart[] = JHTML::_('select.option',1,JTEXT::_('YES'));
+    $html .= $pane->startPanel(JTEXT::_('SEM_E072'),'panel4');
+    $html .= "<br />";
+    $html .= "<table width=\"100%\" cellspacing=\"0\">";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E079')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"new\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->new."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'new_type','', 'value', 'text', $emails->new_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E080')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"changed\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->changed."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'changed_type','', 'value', 'text', $emails->changed_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E081')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"unpublished_recent\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->unpublished_recent."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'unpublished_recent_type','', 'value', 'text', $emails->unpublished_recent_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E082')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"unpublished_over\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->unpublished_over."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'unpublished_over_type','', 'value', 'text', $emails->unpublished_over_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E083')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"republished_recent\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->republished_recent."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'republished_recent_type','', 'value', 'text', $emails->republished_recent_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E084')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"republished_over\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->republished_over."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'republished_over_type','', 'value', 'text', $emails->republished_over_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E085')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"booked2\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->booked."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'booked2_type','', 'value', 'text', $emails->booked_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E086')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"bookingchanged\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->bookingchanged."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'bookingchanged_type','', 'value', 'text', $emails->bookingchanged_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E087')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"canceled\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->canceled."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'canceled_type','', 'value', 'text', $emails->canceled_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E088')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"paid\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->paid."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'paid_type','', 'value', 'text', $emails->paid_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E089')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"unpaid\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->unpaid."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'unpaid_type','', 'value', 'text', $emails->unpaid_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E090')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"certificated\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->certificated."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'certificated_type','', 'value', 'text', $emails->certificated_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E091')." ".sem_f074('evtags'),'d','','','plist_key')."</tr><tr>".sem_f022("<textarea name=\"uncertificated\" cols=\"80\" rows=\"10\" class=\"text_area\">".$emails->uncertificated."</textarea>",'d','','','plist_value')."</tr>";
+    $html .= "<tr>".sem_f022(JTEXT::_('SEM_E078'),'d','','','plist_key')."</tr><tr>".sem_f022(JHTML::_('select.radiolist', $emailart, 'uncertificated_type','', 'value', 'text', $emails->uncertificated_type),'d','','','plist_value')."</tr>";
+    $html .= "<tr><td class=\"plist_empty\"></td></tr>";
+
+    $html .= sem_f023(e);
+    $html .= $pane->endPanel();
+
+    $html .= $pane->endPane();
+
+// Versteckte Felder
+
     $html .= "\n<input type=\"hidden\" name=\"option\" value=\"".JRequest::getCmd('option')."\" />";
     $html .= "<input type=\"hidden\" name=\"task\" value=\"\" />";
     $html .= "<input type=\"hidden\" name=\"uid\" value=\"\" />";
@@ -774,4 +1088,5 @@ class HTML_Seminar {
   }
 
 }
+
 ?>
